@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Sheng的个人世界 | 音乐·游戏·博客</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0b0f1c;
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            color: #eef2ff;
+            line-height: 1.5;
+            padding: 2rem 1rem;
+        }
+
+        /* 复古CRT微扫线效果 */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            background: repeating-linear-gradient(0deg, rgba(0,0,0,0.03) 0px, rgba(0,0,0,0.03) 2px, transparent 2px, transparent 6px);
+            z-index: 999;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            background: rgba(18, 25, 45, 0.65);
+            backdrop-filter: blur(2px);
+            border-radius: 2rem;
+            padding: 2rem 2rem 2.5rem;
+            box-shadow: 0 25px 45px -12px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05);
+            border: 1px solid rgba(72, 187, 255, 0.2);
+        }
+
+        /* 通用标题风格 */
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            letter-spacing: -0.01em;
+            background: linear-gradient(135deg, #F5F9FF 0%, #9BB8FF 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            border-left: 5px solid #3b82f6;
+            padding-left: 1.2rem;
+            margin: 2rem 0 1.5rem 0;
+        }
+
+        .section-title:first-of-type {
+            margin-top: 0;
+        }
+
+        /* 自我介绍卡片 */
+        .about-card {
+            background: linear-gradient(145deg, #101a2c, #0c1122);
+            border-radius: 2rem;
+            padding: 1.8rem;
+            border: 1px solid rgba(59,130,246,0.5);
+            box-shadow: 0 10px 20px -5px rgba(0,0,0,0.4);
+            margin-bottom: 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            align-items: center;
+        }
+        .avatar-placeholder {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(145deg, #2563eb, #6d28d9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            font-weight: bold;
+            box-shadow: 0 0 0 4px rgba(59,130,246,0.4);
+            color: white;
+            flex-shrink: 0;
+        }
+        .about-text {
+            flex: 1;
+        }
+        .about-text h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #FFE6B0, #FFB347);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+        }
+        .about-text p {
+            color: #cfdfed;
+            margin-bottom: 0.6rem;
+            line-height: 1.5;
+        }
+        .tag-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 12px;
+        }
+        .tag {
+            background: #1e2a44;
+            padding: 0.2rem 1rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            color: #b9d0ff;
+            font-weight: 500;
+        }
+
+        /* 音乐厅卡片 */
+        .music-card {
+            background: #101624;
+            border-radius: 1.8rem;
+            padding: 1.8rem;
+            border: 1px solid #2d3a5e;
+            transition: all 0.2s ease;
+            box-shadow: 0 10px 20px -5px rgba(0,0,0,0.4);
+        }
+
+        .listen-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: linear-gradient(95deg, #2563eb, #1e40af);
+            padding: 0.85rem 2rem;
+            border-radius: 3rem;
+            font-weight: 600;
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: all 0.2s;
+            border: 1px solid rgba(59,130,246,0.5);
+            margin-top: 0.8rem;
+        }
+
+        .listen-btn:hover {
+            background: linear-gradient(95deg, #3b82f6, #2563eb);
+            transform: scale(1.02);
+            box-shadow: 0 8px 20px #1e40af40;
+        }
+
+        /* 游戏厅区 */
+        .game-zone {
+            background: #0c1020;
+            border-radius: 1.8rem;
+            border: 1px solid #2a3655;
+            overflow: hidden;
+            padding: 0;
+        }
+
+        .game-frame {
+            background: #070b14;
+            padding: 1rem;
+            text-align: center;
+            border-bottom: 1px solid #2a3a60;
+        }
+
+        .highscore-table {
+            background: #0b0f18;
+            padding: 1.2rem 1.8rem;
+            border-top: 1px solid #2a3a60;
+        }
+
+        .highscore-table h3 {
+            font-size: 1.4rem;
+            font-family: monospace;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 1rem;
+            color: #facc15;
+        }
+
+        .score-list {
+            list-style: none;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .score-list li {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.6rem 0;
+            border-bottom: 1px dashed #2a3655;
+        }
+
+        /* 博客折叠样式 */
+        .blog-wrapper {
+            margin-bottom: 1.5rem;
+            border-radius: 1.8rem;
+            background: transparent;
+        }
+        .blog-post {
+            background: #fef9ef;
+            color: #1e1e2f;
+            border-radius: 1.8rem;
+            padding: 1.5rem 2rem;
+            box-shadow: 0 12px 24px -12px rgba(0,0,0,0.3);
+            border: 1px solid #ffdd99;
+            transition: all 0.2s;
+        }
+        .blog-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            user-select: none;
+        }
+        .blog-title {
+            font-size: 1.7rem;
+            font-weight: 800;
+            border-left: 6px solid #c2410c;
+            padding-left: 1rem;
+            color: #2c2c2c;
+            margin: 0;
+        }
+        .toggle-icon {
+            font-size: 1.8rem;
+            background: #f0dbc0;
+            width: 40px;
+            height: 40px;
+            border-radius: 40px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+            color: #b45309;
+        }
+        .blog-meta {
+            font-family: monospace;
+            color: #7f6b4a;
+            margin: 0.8rem 0 0 0;
+            font-size: 0.8rem;
+        }
+        .blog-content {
+            margin-top: 1.5rem;
+            padding-top: 0.5rem;
+            border-top: 1px dashed #e2cfb3;
+            display: none;
+        }
+        .blog-content.show {
+            display: block;
+        }
+        .blog-content h3 {
+            margin: 1.2rem 0 0.6rem;
+            font-weight: 700;
+            font-size: 1.35rem;
+            color: #b45309;
+        }
+        .blog-content h4 {
+            font-weight: 700;
+            margin: 0.8rem 0 0.3rem;
+            color: #9b2c1d;
+        }
+        .blog-content table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fff6e8;
+            margin: 1rem 0;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+        .blog-content th, .blog-content td {
+            border: 1px solid #e2cfb3;
+            padding: 0.5rem;
+            text-align: left;
+        }
+        .blog-content th {
+            background: #e7cfaa;
+        }
+        .highlight {
+            background: #fde68a;
+            padding: 0.1rem 0.3rem;
+            font-weight: bold;
+            border-radius: 8px;
+        }
+        .quote-note {
+            background: #e9e0ce;
+            padding: 0.8rem 1.2rem;
+            border-left: 6px solid #f97316;
+            border-radius: 1rem;
+            font-style: italic;
+            margin: 1rem 0;
+        }
+        .blog-footer {
+            margin-top: 1.5rem;
+            padding-top: 0.8rem;
+            border-top: 2px dotted #cdb891;
+            font-size: 0.8rem;
+            color: #7b623c;
+        }
+
+        /* 评论区 */
+        .comment-section {
+            margin-top: 2rem;
+            background: #fffaf0;
+            border-radius: 1.8rem;
+            padding: 1.5rem;
+            border: 1px solid #fadc9f;
+        }
+        .comment-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #5e3a1c;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #ffcd94;
+            padding-bottom: 0.5rem;
+        }
+        .comment-form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 1.5rem;
+            background: #fff4e5;
+            padding: 1rem;
+            border-radius: 1.2rem;
+        }
+        .comment-form input, .comment-form textarea {
+            border: 1px solid #e9cfaa;
+            border-radius: 2rem;
+            padding: 0.6rem 1rem;
+            font-family: inherit;
+            font-size: 0.9rem;
+            background: white;
+        }
+        .comment-form textarea {
+            border-radius: 1.2rem;
+            min-height: 70px;
+        }
+        .comment-form button {
+            background: #e67e22;
+            border: none;
+            padding: 0.5rem 1.2rem;
+            border-radius: 3rem;
+            font-weight: bold;
+            color: white;
+            width: fit-content;
+            cursor: pointer;
+            box-shadow: 0 3px 0 #9b4a0e;
+        }
+        .comment-list {
+            max-height: 350px;
+            overflow-y: auto;
+        }
+        .comment-item {
+            background: #ffffffdb;
+            border-radius: 1rem;
+            padding: 0.7rem 1rem;
+            margin-bottom: 0.8rem;
+            border-left: 5px solid #f9b953;
+        }
+        .comment-name {
+            font-weight: 800;
+            color: #c2410c;
+            margin-right: 10px;
+        }
+        .comment-time {
+            font-size: 0.7rem;
+            color: #b97f3a;
+        }
+        .comment-text {
+            margin-top: 5px;
+            color: #2e241a;
+        }
+        .delete-comment {
+            float: right;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #b6723c;
+        }
+        .empty-comments {
+            text-align: center;
+            color: #b87c44;
+            padding: 1rem;
+        }
+
+        /* 联系方式 */
+        .contact-card {
+            background: #0f1422;
+            border-radius: 1.6rem;
+            padding: 1.5rem;
+            text-align: center;
+            border: 1px solid #2d3e6e;
+            margin-top: 2rem;
+        }
+        .email-link {
+            background: #1e293b;
+            padding: 0.7rem 2rem;
+            border-radius: 60px;
+            display: inline-block;
+            font-family: monospace;
+            text-decoration: none;
+            color: #8bb9fe;
+        }
+        footer {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+        .badge {
+            background: #facc1510;
+            border-radius: 30px;
+            padding: 0.2rem 0.8rem;
+            font-size: 0.7rem;
+            color: #facc15;
+        }
+        .custom-game-stats {
+            display: flex;
+            justify-content: space-between;
+            background: #15232ecc;
+            padding: 6px 16px;
+            border-radius: 40px;
+            margin-bottom: 12px;
+        }
+        @media (max-width: 700px) {
+            .container { padding: 1rem; }
+            .section-title { font-size: 1.6rem; }
+            .blog-title { font-size: 1.3rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- 自我介绍 -->
+    <section>
+        <div class="about-card">
+            <div class="avatar-placeholder">S</div>
+            <div class="about-text">
+                <h3>⚡ Sheng · 独立创作者</h3>
+                <p>🎹 音乐制作人 / 🎮 独立游戏爱好者 / 🏀 雷霆死忠球迷。<br>
+                白天写代码，夜晚做 beats，偶尔在博客区写下关于篮球的热血文字。相信创造力和韧性可以改变一切。<br>
+                “Thunder Up, 保持热爱。”</p>
+                <div class="tag-list">
+                    <span class="tag">#LoFi & Beats</span>
+                    <span class="tag">#GameMaker</span>
+                    <span class="tag">#ThunderNation</span>
+                    <span class="tag">#IndieDev</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 音乐厅 -->
+    <section>
+        <h2 class="section-title">🎸 音乐厅 · Music Portfolio</h2>
+        <div class="music-card">
+            <p>✨ 氛围电子 / 即兴旋律实验 —— 首支单曲正式上线。<br>戴上耳机，感受流动的声景。</p>
+            <a href="https://www.flowmusic.app/song/d6a10fb3-6627-4c41-a9fc-5151d0ff1c29" target="_blank" class="listen-btn">🎧 试听这首歌 →</a>
+            <div style="margin-top: 0.8rem; font-size:0.8rem;">🎵 制作/混音：Sheng | 独立发行</div>
+        </div>
+    </section>
+
+    <!-- 游戏厅 -->
+    <section>
+        <h2 class="section-title">👾 游戏厅 · 形状捕手</h2>
+        <div class="game-zone">
+            <div class="game-frame">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.6rem;">
+                    <span>🎮 开机即玩 · 点击彩色形状得分</span>
+                    <span class="badge">⚡ 速度越快 出现越快</span>
+                </div>
+                <div id="shapeCatcherRoot"></div>
+            </div>
+            <div class="highscore-table">
+                <h3>🏆 本地高分榜</h3>
+                <ul class="score-list">
+                    <li><span>🥇 你的极限</span><span id="staticHighScoreDisplay" style="color:#facc15;">0</span></li>
+                    <li><span>🥈 反应王者</span><span>超越自我</span></li>
+                    <li><span>🥉 速度之星</span><span>等你刷新</span></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- 博客区域：两篇文章，均支持折叠 -->
+    <section>
+        <h2 class="section-title">✍️ 个人博客 · Thunder Soul</h2>
+        
+        <!-- 博客1：常规赛复盘 -->
+        <div class="blog-wrapper">
+            <div class="blog-post">
+                <div class="blog-header" onclick="toggleBlog(this)">
+                    <div class="blog-title">2026 NBA 常规赛复盘：我的主队雷霆</div>
+                    <div class="toggle-icon">▼</div>
+                </div>
+                <div class="blog-meta">📅 2026年5月26日 · 俄克拉荷马城</div>
+                <div class="blog-content">
+                    <p>说实话，虽然是新球迷，之前关注不算多。但 2025-26 赛季，不一样了。这支雷霆，让我第一次有了那种<strong class="highlight">“我们真的回来了”</strong>的笃定感。<strong>64 胜 18 负、西部第一；</strong>常规赛场均 119.0 分；连续第三年首轮横扫——数据很冷，但背后的故事很烫。</p>
+                    <h3>📊 第一部分：数字背后的故事——64 胜的含金量</h3>
+                    <table><thead><tr><th>指标</th><th>数据</th><th>联盟排名</th></tr></thead><tbody><tr><td>常规赛战绩</td><td><strong>64胜18负</strong></td><td>西部第1</td></tr><tr><td>场均得分</td><td><strong>119.0分</strong></td><td>联盟前5</td></tr><tr><td>场均失分</td><td>107.9分</td><td>防守效率顶级</td></tr><tr><td>净胜分</td><td><strong>+11.1分</strong></td><td>联盟第1</td></tr></tbody></table>
+                    <p>64 胜是什么概念？这是雷霆队史最佳战绩。前26场24胜2负，最后23场21胜2负。这更像一出三幕剧：统治·挣扎·回应。</p>
+                    <h3>⚡ 年度高光：横扫湖人，场均净胜25.1分</h3>
+                    <p>5月12日西部半决赛G4，115-110，雷霆对湖人8胜0负，场均净胜25.1分创造纪录。SGA平静拥抱对手，冷静且有力。</p>
+                    <div class="quote-note">属于我们的三巨头：SGA、杰威、切特，加上替补妖刀阿杰·米切尔。年轻且不可阻挡。</div>
+                    <div class="blog-footer">📌 彩蛋：SGA面瘫庆祝、多尔特锁死时刻、主场OKC声浪。</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 博客2：西决G5前瞻（全新文章） -->
+        <div class="blog-wrapper">
+            <div class="blog-post">
+                <div class="blog-header" onclick="toggleBlog(this)">
+                    <div class="blog-title">西决 G5 前瞻：没有杰威和米切尔，雷霆的天王山怎么打？</div>
+                    <div class="toggle-icon">▼</div>
+                </div>
+                <div class="blog-meta">📅 2026年5月28日 · 前瞻预测</div>
+                <div class="blog-content">
+                    <p><strong>写在前面：这不是雷霆第一次被看衰</strong></p>
+                    <p>先看一组残酷的数字：<br>杰伦·威廉姆斯：西决场均 21.3分 + 5.8篮板 + 4.5助攻，命中率 51%<br>阿杰·米切尔：季后赛替补场均 15.1分，三分命中率 43%<br>两个人都打不了 G5。<br>消息一出，各大平台的预测风向几乎一边倒——马刺主场，雷霆残阵，系列赛 2-2，天平似乎已经彻底倾斜。<br>但如果你追了这支雷霆足够久，你会知道一件事：<strong>这支球队，从来不在被看衰时倒下。</strong></p>
+                    <h3>第一，进攻端：谁来填补 36.4 分的空缺？</h3>
+                    <p>杰威 + 米切尔，场均加起来 36.4 分。缺少两个能自主进攻的球员，SGA 面临的防守压力前所未有。<br><strong>卡森·华莱士，该你站出来了</strong>：二年级，常规赛场均8.7分，三分命中率41.2%。G5他需要投进空位三分，分担持球压力。<br><strong>以赛亚·乔</strong>：更早更快的出手，创造空间价值。<br><strong>切特·霍姆格伦</strong>：低位惩罚错位，文班协防时坚决背打。</p>
+                    <h3>第二，防守端：没有杰威，谁来对位瓦塞尔？</h3>
+                    <p>杰威对位瓦塞尔限制命中率仅38%。G5多尔特别锁凯尔登，用团队轮转限制瓦塞尔，甚至夹击+轮转赌底角三分。雷霆是全联盟外线轮转最快的球队之一。</p>
+                    <h3>第三，X因素：SGA 需要一场"MVP式"的接管</h3>
+                    <p>当杰威缺阵时，SGA场均34.7分+6.3篮板+7.1助攻，使用率37%。面对文班蹲坑+换防，他需要更多的中距离干拔、造犯规以及快速出球。如果SGA打出40+，雷霆赢球希望大增。</p>
+                    <h3>第四，心态：雷霆的最大优势可能不是阵容</h3>
+                    <p>杰威受伤期间10战8胜；西决G1输后G2大胜15分；本赛季ESPN预测胜率<50%时，雷霆16胜6负。越是看衰，越危险。AT&T中心的嘘声只会成为燃料。</p>
+                    <div class="quote-note">雷霆赢球条件：角色球员10+三分，切特惩罚错位，SGA砍下40+，瓦塞尔限制在20分以下。马刺赢球则靠文班25+15+5和瓦塞尔爆发。</div>
+                    <p>作为一个追了雷霆十几年的球迷，我说不出“雷霆一定会赢”，但我会穿上SGA球衣，打开直播，然后相信。因为这支雷霆，从来没有让我失望过。<br><strong>⚡ Thunder Up，G5 见。</strong></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 评论区 -->
+        <div class="comment-section" id="commentSection">
+            <div class="comment-title">💬 球迷回响 · 一起聊球</div>
+            <div class="comment-form">
+                <input type="text" id="commentNameInput" placeholder="昵称 (例如: OKC铁粉)">
+                <textarea id="commentTextInput" rows="2" placeholder="写下你对雷霆的激情、对文章的看法..."></textarea>
+                <button id="submitCommentBtn">📢 发送评论</button>
+            </div>
+            <div id="commentListContainer" class="comment-list"></div>
+        </div>
+    </section>
+
+    <!-- 连接处 -->
+    <section>
+        <h2 class="section-title">📬 连接处</h2>
+        <div class="contact-card">
+            <p>✉️ 对于音乐、游戏或篮球，都欢迎交流 ——</p>
+            <a href="mailto:shengdatasheng@gmail.com" class="email-link">📧 shengdatasheng@gmail.com</a>
+            <div style="margin-top: 1rem; display: flex; justify-content: center; gap: 1rem;">
+                <span>🎮 Steam: ShengThunder</span>
+                <span>🎵 网易云/Spotify: DATA_SHENG</span>
+                <span>🐦 X: @OKC_Sheng</span>
+            </div>
+        </div>
+    </section>
+    <footer>🖥️ Sheng的个人数字花园 · 音乐 × 篮球 × 独立游戏 | 保持热爱，保持创作。</footer>
+</div>
+
+<script>
+    // ======================= 形状捕手游戏 =======================
+    (function(){
+        const container = document.getElementById('shapeCatcherRoot');
+        if(!container) return;
+        const gameHTML = `
+            <div style="width:100%; max-width:900px; margin:0 auto;">
+                <div class="custom-game-stats">
+                    <div>⭐ 得分 <span id="inlineScoreVal">0</span></div>
+                    <div>🏆 最高 <span id="inlineBestVal">0</span></div>
+                    <div>⏱️ 剩余 <span id="inlineTimerVal">10.0</span>s</div>
+                </div>
+                <canvas id="shapeCanvas" width="900" height="550" style="width:100%; height:auto; background:#fef9e8; border-radius:28px; cursor:pointer; box-shadow:0 8px 20px black;"></canvas>
+                <div style="display:flex; justify-content:center; gap:16px; margin-top:12px;">
+                    <button id="inlineResetBtn" style="background:#fc6e4c; border:none; padding:6px 20px; border-radius:40px; font-weight:bold; color:white;">🔄 重新开局</button>
+                    <button id="inlineNewBtn" style="background:#f7b731; border:none; padding:6px 20px; border-radius:40px; font-weight:bold;">✨ 新的一局</button>
+                </div>
+                <div id="inlineMsg" style="text-align:center; margin-top:8px; font-size:0.8rem; color:#ffdd99;">✨ 疯狂点击彩色形状！每个+10分 ✨</div>
+            </div>
+        `;
+        container.innerHTML = gameHTML;
+        const canvas = document.getElementById('shapeCanvas');
+        const ctx = canvas.getContext('2d');
+        const scoreSpan = document.getElementById('inlineScoreVal');
+        const bestSpan = document.getElementById('inlineBestVal');
+        const timerSpan = document.getElementById('inlineTimerVal');
+        const resetBtn = document.getElementById('inlineResetBtn');
+        const newBtn = document.getElementById('inlineNewBtn');
+        const msgDiv = document.getElementById('inlineMsg');
+        let width = 900, height = 550;
+        canvas.width = width; canvas.height = height;
+        let score = 0, bestScore = 0, timeLeft = 10.0, gameActive = true;
+        let shapes = [], particles = [];
+        let lastFrameTime = 0, lastSpawnTime = 0;
+        let baseSpawnInterval = 800;
+        function getCurrentSpawnInterval() { let interval = baseSpawnInterval - Math.floor(score / 15) * 20; return interval < 280 ? 280 : interval; }
+        function randomRange(min,max){ return min+Math.random()*(max-min); }
+        function randomVibrantColor(){ return `hsl(${Math.random()*360}, ${70+Math.random()*25}%, ${65+Math.random()*20}%)`; }
+        const shapeTypes = ['circle','rect','triangle','diamond','star'];
+        function pointInTriangle(px,py,a,b,c){ const sign=(p1,p2,p3)=> (p1.x-p3.x)*(p2.y-p3.y)-(p2.x-p3.x)*(p1.y-p3.y); let d1=sign({x:px,y:py},a,b), d2=sign({x:px,y:py},b,c), d3=sign({x:px,y:py},c,a); let hasNeg=(d1<0)||(d2<0)||(d3<0), hasPos=(d1>0)||(d2>0)||(d3>0); return !(hasNeg&&hasPos); }
+        function pointInQuad(px,py,a,b,c,d){ return pointInTriangle(px,py,a,b,c)||pointInTriangle(px,py,a,c,d); }
+        function pointInStar(px,py,cx,cy,R){ let outerR=R, innerR=R*0.45, points=[]; for(let i=0;i<10;i++){ let angle=(i*36-90)*Math.PI/180, r=(i%2===0)?outerR:innerR; points.push({x:cx+r*Math.cos(angle),y:cy+r*Math.sin(angle)}); } let inside=false; for(let i=0,j=points.length-1;i<points.length;j=i++){ let xi=points[i].x,yi=points[i].y,xj=points[j].x,yj=points[j].y; let intersect=((yi>py)!=(yj>py))&&(px<(xj-xi)*(py-yi)/(yj-yi)+xi); if(intersect) inside=!inside; } return inside; }
+        class MovingShape{ constructor(x,y,vx,vy,size,color,type,rotSpeed){ this.x=x; this.y=y; this.vx=vx; this.vy=vy; this.size=size; this.color=color; this.type=type; this.rotation=0; this.rotSpeed=rotSpeed; this.pulseScale=1; this.pulseTimer=0; }
+            update(delta){ if(!gameActive) return; this.x+=this.vx*delta; this.y+=this.vy*delta; if(this.x-this.size<0){ this.x=this.size; this.vx=-this.vx; } if(this.x+this.size>width){ this.x=width-this.size; this.vx=-this.vx; } if(this.y-this.size<0){ this.y=this.size; this.vy=-this.vy; } if(this.y+this.size>height){ this.y=height-this.size; this.vy=-this.vy; } this.rotation+=this.rotSpeed*delta; if(this.pulseTimer>0){ this.pulseTimer-=delta; if(this.pulseTimer<=0) this.pulseScale=1; else this.pulseScale=1+Math.sin(this.pulseTimer*20)*0.12; } else this.pulseScale=1; }
+            containsPoint(px,py){ let half=this.size; if(px<this.x-half||px>this.x+half||py<this.y-half||py>this.y+half) return false; switch(this.type){ case 'circle': let dx=px-this.x, dy=py-this.y; return (dx*dx+dy*dy)<=this.size*this.size; case 'rect': return (Math.abs(px-this.x)<=this.size && Math.abs(py-this.y)<=this.size); case 'triangle': let p1={x:this.x,y:this.y-this.size*0.85},p2={x:this.x-this.size*0.85,y:this.y+this.size*0.5},p3={x:this.x+this.size*0.85,y:this.y+this.size*0.5}; return pointInTriangle(px,py,p1,p2,p3); case 'diamond': let a={x:this.x,y:this.y-this.size},b={x:this.x+this.size,y:this.y},c={x:this.x,y:this.y+this.size},d={x:this.x-this.size,y:this.y}; return pointInQuad(px,py,a,b,c,d); case 'star': return pointInStar(px,py,this.x,this.y,this.size); default: return false; } }
+            draw(ctx){ ctx.save(); ctx.translate(this.x,this.y); ctx.rotate(this.rotation); ctx.scale(this.pulseScale,this.pulseScale); ctx.fillStyle=this.color; ctx.shadowBlur=6; ctx.beginPath(); switch(this.type){ case 'circle': ctx.arc(0,0,this.size,0,Math.PI*2); break; case 'rect': ctx.fillRect(-this.size,-this.size,this.size*2,this.size*2); break; case 'triangle': ctx.moveTo(0,-this.size*0.9); ctx.lineTo(-this.size*0.85,this.size*0.6); ctx.lineTo(this.size*0.85,this.size*0.6); break; case 'diamond': ctx.moveTo(0,-this.size); ctx.lineTo(this.size,0); ctx.lineTo(0,this.size); ctx.lineTo(-this.size,0); break; case 'star': let rot=Math.PI/2*3,step=Math.PI/5; ctx.beginPath(); for(let i=0;i<5;i++){ let x1=Math.cos(rot)*this.size*0.8, y1=Math.sin(rot)*this.size*0.8; ctx.lineTo(x1,y1); rot+=step; let x2=Math.cos(rot)*this.size*0.4, y2=Math.sin(rot)*this.size*0.4; ctx.lineTo(x2,y2); rot+=step; } ctx.closePath(); break; } ctx.fill(); ctx.strokeStyle="#fff9cf"; ctx.lineWidth=1.5; ctx.stroke(); ctx.restore(); }
+        }
+        function addParticles(x,y,color){ for(let i=0;i<10;i++) particles.push({x:x,y:y,vx:(Math.random()-0.5)*200,vy:(Math.random()-0.5)*200-40,life:0.5,color:color,size:3+Math.random()*5}); }
+        function updateParticles(delta){ for(let i=0;i<particles.length;i++){ let p=particles[i]; p.x+=p.vx*delta; p.y+=p.vy*delta; p.life-=delta; p.vy+=200*delta; if(p.life<=0){ particles.splice(i,1); i--; } } }
+        function drawParticles(){ for(let p of particles){ ctx.globalAlpha=p.life; ctx.fillStyle=p.color; ctx.beginPath(); ctx.arc(p.x,p.y,p.size,0,Math.PI*2); ctx.fill(); } ctx.globalAlpha=1; }
+        function spawnShape(){ if(!gameActive) return; let size=randomRange(22,42), x=randomRange(size,width-size), y=randomRange(size,height-size); let speedBase=120+Math.min(220,Math.floor(score/8)*9); let vx=randomRange(-speedBase,speedBase), vy=randomRange(-speedBase,speedBase); let type=shapeTypes[Math.floor(Math.random()*shapeTypes.length)]; shapes.push(new MovingShape(x,y,vx,vy,size,randomVibrantColor(),type,randomRange(-3,3))); }
+        function updateUI(){ scoreSpan.innerText=score; if(score>bestScore){ bestScore=score; localStorage.setItem('shapeCatcherBestSite',bestScore); bestSpan.innerText=bestScore; document.getElementById('staticHighScoreDisplay').innerText=bestScore; } timerSpan.innerText=timeLeft.toFixed(1); }
+        function loadBest(){ let saved=localStorage.getItem('shapeCatcherBestSite'); bestScore=saved?parseInt(saved):0; bestSpan.innerText=bestScore; document.getElementById('staticHighScoreDisplay').innerText=bestScore; }
+        function endGame(){ if(!gameActive) return; gameActive=false; msgDiv.innerHTML="⏰ 时间到！点击「新的一局」继续挑战！"; }
+        function resetGame(){ gameActive=true; score=0; timeLeft=10.0; shapes=[]; particles=[]; updateUI(); for(let i=0;i<4;i++) spawnShape(); lastSpawnTime=performance.now()/1000; msgDiv.innerHTML="⚡ 新对局！点击形状，越多越快！⚡"; }
+        function handleCanvasClick(e){ if(!gameActive) return; let rect=canvas.getBoundingClientRect(); let scaleX=canvas.width/rect.width, scaleY=canvas.height/rect.height; let clientX=e.touches?e.touches[0].clientX:e.clientX, clientY=e.touches?e.touches[0].clientY:e.clientY; let canvasX=(clientX-rect.left)*scaleX, canvasY=(clientY-rect.top)*scaleY; for(let i=shapes.length-1;i>=0;i--){ let s=shapes[i]; if(s.containsPoint(canvasX,canvasY)){ score+=10; updateUI(); addParticles(s.x,s.y,s.color); shapes.splice(i,1); spawnShape(); msgDiv.innerHTML="🎯 +10 !"; setTimeout(()=>{ if(gameActive) msgDiv.innerHTML="⚡ 继续点击！"; },300); break; } } }
+        canvas.addEventListener('click',handleCanvasClick); canvas.addEventListener('touchstart',(e)=>{ e.preventDefault(); handleCanvasClick(e); });
+        resetBtn.onclick=()=>{ resetGame(); loadBest(); };
+        newBtn.onclick=()=>{ resetGame(); loadBest(); };
+        let lastTime=0, animId;
+        function gameLoop(now){ let delta=Math.min(0.033,(now-lastTime)/1000); if(delta>0){ lastTime=now; if(gameActive){ timeLeft-=delta; if(timeLeft<=0){ timeLeft=0; updateUI(); endGame(); } else updateUI(); let nowSec=now/1000; if(!lastSpawnTime) lastSpawnTime=nowSec; if(nowSec-lastSpawnTime>=getCurrentSpawnInterval()/1000){ spawnShape(); lastSpawnTime=nowSec; if(score>70&&Math.random()<0.3) spawnShape(); } shapes.forEach(s=>s.update(delta)); } updateParticles(delta); ctx.clearRect(0,0,width,height); ctx.fillStyle="#fef0cf"; ctx.fillRect(0,0,width,height); for(let i=0;i<width+height;i+=40){ ctx.beginPath(); ctx.strokeStyle="#ffdb9f"; ctx.moveTo(i,0); ctx.lineTo(0,i); ctx.stroke(); } shapes.forEach(s=>s.draw(ctx)); drawParticles(); if(!gameActive){ ctx.font="bold 40px system-ui"; ctx.fillStyle="#a1220c"; ctx.fillText("GAME OVER", width/2-120, height/2); } } animId=requestAnimationFrame(gameLoop); }
+        loadBest(); resetGame(); lastTime=performance.now(); animId=requestAnimationFrame(gameLoop);
+    })();
+
+    // 折叠博客功能
+    window.toggleBlog = function(headerElem) {
+        const blogPost = headerElem.closest('.blog-post');
+        const content = blogPost.querySelector('.blog-content');
+        const icon = headerElem.querySelector('.toggle-icon');
+        if(content.classList.contains('show')) {
+            content.classList.remove('show');
+            icon.innerHTML = '▶';
+        } else {
+            content.classList.add('show');
+            icon.innerHTML = '▼';
+        }
+    };
+
+    // 评论区 localStorage
+    (function(){
+        const STORAGE_KEY = "thunder_blog_comments_v2";
+        const commentContainer = document.getElementById('commentListContainer');
+        const nameInput = document.getElementById('commentNameInput');
+        const textInput = document.getElementById('commentTextInput');
+        const submitBtn = document.getElementById('submitCommentBtn');
+        function loadComments(){ let stored=localStorage.getItem(STORAGE_KEY); return stored?JSON.parse(stored):[]; }
+        function saveComments(comments){ localStorage.setItem(STORAGE_KEY,JSON.stringify(comments)); }
+        function formatDate(d){ return `${d.getMonth()+1}/${d.getDate()} ${d.getHours().toString().padStart(2,'0')}:${d.getMinutes().toString().padStart(2,'0')}`; }
+        function renderComments(){
+            let comments=loadComments();
+            if(!comments.length){ commentContainer.innerHTML='<div class="empty-comments">✨ 成为第一个留言的雷霆球迷！Thunder Up！✨</div>'; return; }
+            let html='';
+            comments.forEach((c,idx)=>{
+                html+=`<div class="comment-item"><button class="delete-comment" data-idx="${idx}">🗑️</button><div><span class="comment-name">${escapeHtml(c.name)}</span> <span class="comment-time">${c.time}</span></div><div class="comment-text">${escapeHtml(c.text)}</div></div>`;
+            });
+            commentContainer.innerHTML=html;
+            document.querySelectorAll('.delete-comment').forEach(btn=>{
+                btn.addEventListener('click',(e)=>{
+                    let idx=parseInt(btn.getAttribute('data-idx'));
+                    let arr=loadComments(); arr.splice(idx,1); saveComments(arr); renderComments();
+                });
+            });
+        }
+        function escapeHtml(str){ if(!str) return ''; return str.replace(/[&<>]/g,function(m){if(m==='&')return'&amp;';if(m==='<')return'&lt;';if(m==='>')return'&gt;';return m;}); }
+        function addComment(name,text){
+            if(!text.trim()) return false;
+            let comments=loadComments();
+            comments.unshift({ name: name.trim()||"雷霆铁粉", text: text.trim(), time: formatDate(new Date()) });
+            saveComments(comments); renderComments(); return true;
+        }
+        submitBtn.onclick=()=>{ if(!textInput.value.trim()){ alert("写下你的观点吧"); return; } addComment(nameInput.value,textInput.value); nameInput.value=''; textInput.value=''; };
+        renderComments();
+    })();
+</script>
+</body>
+</html>
