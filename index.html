@@ -3,731 +3,622 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Sheng · 星尘回响 | 音律之境</title>
+    <meta name="description" content="Sheng的个人网站 | 音乐制作人 · 独立开发者 · 创意工程师">
+    <title>Sheng · 音律与代码的筑梦者</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            user-select: none;
+        }
+
+        /* CSS 变量 - 支持暗黑模式 */
+        :root {
+            --bg-primary: #f5f7fe;
+            --bg-secondary: #ffffff;
+            --text-primary: #1a1f2e;
+            --text-secondary: #4a5568;
+            --card-bg: #ffffff;
+            --border-color: #e2e8f0;
+            --accent: #3b82f6;
+            --accent-glow: rgba(59,130,246,0.2);
+            --code-bg: #f1f5f9;
+            --shadow: 0 10px 25px -5px rgba(0,0,0,0.05), 0 8px 10px -6px rgba(0,0,0,0.02);
+        }
+
+        body.dark {
+            --bg-primary: #0a0e1a;
+            --bg-secondary: #111827;
+            --text-primary: #f0f3fa;
+            --text-secondary: #9ca3af;
+            --card-bg: #1e293b;
+            --border-color: #334155;
+            --accent: #60a5fa;
+            --code-bg: #0f172a;
+            --shadow: 0 10px 25px -5px rgba(0,0,0,0.3);
         }
 
         body {
-            background: #080c18;
-            font-family: 'Inter', system-ui, 'Segoe UI', 'Helvetica Neue', sans-serif;
-            color: #eef5ff;
-            line-height: 1.5;
-            padding: 2rem 1rem;
-        }
-
-        /* 深邃星空氛围 */
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            pointer-events: none;
-            background: radial-gradient(circle at 30% 40%, rgba(80, 140, 255, 0.08), transparent 70%),
-                        repeating-linear-gradient(0deg, rgba(0,0,0,0.1) 0px, rgba(0,0,0,0.1) 1px, transparent 1px, transparent 3px);
-            z-index: -1;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            transition: background 0.3s, color 0.2s;
         }
 
         .container {
             max-width: 1280px;
             margin: 0 auto;
-            background: rgba(12, 20, 32, 0.65);
-            backdrop-filter: blur(8px);
-            border-radius: 2.5rem;
-            padding: 2rem 2rem 2.5rem;
-            box-shadow: 0 30px 50px -20px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.05);
-            border: 1px solid rgba(120, 180, 255, 0.25);
+            padding: 2rem 1.5rem;
         }
 
-        .section-title {
-            font-size: 2.2rem;
-            font-weight: 700;
-            letter-spacing: -0.01em;
-            background: linear-gradient(125deg, #FFFFFF, #A9C9FF, #6EA8FE);
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
-            border-left: 4px solid #6aa9ff;
-            padding-left: 1.2rem;
-            margin: 2rem 0 1.5rem 0;
-        }
-
-        /* 自我介绍 空灵风格 */
-        .about-card {
-            background: linear-gradient(145deg, #0f172acc, #070c1ae6);
-            border-radius: 2rem;
-            padding: 1.8rem;
-            border: 1px solid rgba(100, 170, 255, 0.4);
-            backdrop-filter: blur(4px);
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1.8rem;
-            align-items: center;
-        }
-        .avatar-placeholder {
-            width: 105px;
-            height: 105px;
-            background: radial-gradient(circle at 35% 35%, #7b9eff, #4b3b9e);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-            font-weight: 400;
-            box-shadow: 0 0 0 3px rgba(110, 170, 255, 0.5);
-            color: white;
-        }
-        .about-text h3 {
-            font-size: 1.9rem;
-            font-weight: 600;
-            background: linear-gradient(135deg, #E0F0FF, #B1D0FF);
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
-        }
-        .tag-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 12px;
-        }
-        .tag {
-            background: #1a2648b3;
-            padding: 0.2rem 1rem;
+        /* 暗黑模式切换按钮 */
+        .theme-toggle {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
             border-radius: 60px;
-            font-size: 0.75rem;
-            color: #bdd4ff;
-            backdrop-filter: blur(2px);
-        }
-
-        /* 音乐卡片 */
-        .music-card {
-            background: #0b1226cc;
-            border-radius: 1.8rem;
-            padding: 2rem;
-            border: 1px solid #3a5799;
-            backdrop-filter: blur(4px);
-        }
-        .listen-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.7rem;
-            background: linear-gradient(100deg, #3167d9, #1c3988);
-            padding: 0.8rem 2rem;
-            border-radius: 3rem;
-            font-weight: 600;
-            color: white;
-            text-decoration: none;
-            margin-top: 1rem;
-            border: 1px solid #88aaff;
+            padding: 12px;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: var(--shadow);
             transition: 0.2s;
         }
 
-        /* 游戏厅：星尘回响 - 升级版音乐节奏领域 */
-        .game-zone {
-            background: #030718b3;
-            border-radius: 2rem;
-            border: 1px solid #4c6eae;
-            overflow: hidden;
-            backdrop-filter: blur(6px);
+        /* 头部区域 */
+        .hero {
+            text-align: center;
+            margin-bottom: 3rem;
         }
-        .game-header {
-            background: #0b1027dd;
-            padding: 0.8rem 1.8rem;
+        .avatar {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            margin: 0 auto 1rem;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
-            border-bottom: 1px solid #4460a0;
+            justify-content: center;
+            font-size: 3.5rem;
+            box-shadow: 0 20px 30px -10px rgba(59,130,246,0.3);
         }
-        .game-title-badge {
-            font-weight: 600;
-            letter-spacing: 1px;
-            background: linear-gradient(120deg, #e9f0ff, #aac8ff);
+        .hero h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #3b82f6, #a855f7);
             background-clip: text;
             -webkit-background-clip: text;
             color: transparent;
         }
-        .game-scoreboard {
-            display: flex;
-            gap: 26px;
-            background: #00000055;
-            padding: 0.3rem 1.3rem;
-            border-radius: 50px;
-            font-family: monospace;
-            font-weight: bold;
-        }
-        canvas#stellCanvas {
-            width: 100%;
-            height: auto;
-            background: radial-gradient(ellipse at 30% 25%, #0a1020, #010108);
-            display: block;
-            cursor: crosshair;
-            border-radius: 28px;
-        }
-        .game-controls {
-            background: #050b1aaa;
-            padding: 1rem;
-            display: flex;
-            justify-content: center;
-            gap: 24px;
-            border-top: 1px solid #33508a;
-        }
-        .ctrl-btn {
-            background: #1e2a4e;
-            border: none;
-            padding: 0.5rem 1.8rem;
-            border-radius: 3rem;
-            font-weight: 600;
-            color: #eaf3ff;
-            cursor: pointer;
-            backdrop-filter: blur(2px);
-            transition: 0.1s;
-        }
-        .rhythm-stats {
-            background: #020617b3;
-            padding: 0.7rem;
-            text-align: center;
-            font-size: 0.85rem;
-            color: #bfdbff;
-            border-top: 1px solid #2b4880;
+        .hero .tagline {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
         }
 
-        /* 留言区改为 星尘笔记本·灵感碎片 */
-        .guestbook-section {
-            margin-top: 2rem;
-            background: #111827e6;
-            border-radius: 2rem;
-            padding: 1.5rem;
-            border: 1px solid #5e7fb0;
-            backdrop-filter: blur(4px);
+        /* 通用卡片样式 */
+        .card {
+            background: var(--card-bg);
+            border-radius: 1.5rem;
+            padding: 1.8rem;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+            transition: transform 0.2s;
         }
-        .guestbook-title {
-            font-size: 1.6rem;
-            font-weight: 600;
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1.2rem;
             display: flex;
             align-items: center;
-            gap: 12px;
-            color: #cde3ff;
-            border-bottom: 2px solid #4f70aa;
-            padding-bottom: 0.6rem;
-            margin-bottom: 1rem;
-        }
-        .message-form {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            background: #0a1126aa;
-            padding: 1.2rem;
-            border-radius: 1.5rem;
-        }
-        .message-form input, .message-form textarea {
-            background: #ffffffec;
-            border: none;
-            border-radius: 2rem;
-            padding: 0.7rem 1.2rem;
-            font-family: inherit;
-            color: #1a1f2c;
-        }
-        .message-form button {
-            background: #4f7bc9;
-            border: none;
-            padding: 0.6rem 1.5rem;
-            border-radius: 3rem;
-            font-weight: bold;
-            color: white;
-            width: fit-content;
-            cursor: pointer;
-        }
-        .message-list {
-            max-height: 340px;
-            overflow-y: auto;
-        }
-        .message-item {
-            background: #1e2646cc;
-            border-radius: 1.2rem;
-            padding: 0.8rem 1rem;
-            margin-bottom: 0.7rem;
-            border-left: 5px solid #84b0ff;
-            color: #eef3ff;
-        }
-        .message-name {
-            font-weight: 800;
-            color: #ffd894;
-        }
-        .delete-msg {
-            float: right;
-            background: none;
-            border: none;
-            color: #b6bfe0;
-            cursor: pointer;
+            gap: 0.5rem;
+            border-left: 4px solid var(--accent);
+            padding-left: 1rem;
         }
 
-        /* 连接处 */
-        .contact-card {
-            background: #0a1126bb;
-            border-radius: 1.8rem;
-            padding: 1.5rem;
+        /* 技能标签 */
+        .skill-tag {
+            display: inline-block;
+            background: var(--code-bg);
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            margin: 0.25rem;
+            border: 1px solid var(--border-color);
+        }
+
+        /* 项目网格 */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+        .project-card {
+            background: var(--card-bg);
+            border-radius: 1.2rem;
+            padding: 1.2rem;
+            border: 1px solid var(--border-color);
+        }
+        .project-card h3 {
+            margin-bottom: 0.5rem;
+        }
+        .project-demo {
+            background: var(--code-bg);
+            border-radius: 1rem;
+            padding: 0.8rem;
+            margin: 1rem 0;
             text-align: center;
-            border: 1px solid #6d8ed0;
-            margin-top: 2rem;
+            font-family: monospace;
+        }
+
+        /* 博客文章列表 */
+        .blog-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .blog-item {
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .blog-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+        }
+        .blog-preview {
+            margin-top: 0.5rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            display: none;
+        }
+        .blog-preview.show {
+            display: block;
+        }
+        .reading-time {
+            font-size: 0.75rem;
+            color: var(--accent);
+        }
+
+        /* 时间轴 (简历) */
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+        .timeline-item {
+            position: relative;
+            padding-bottom: 1.5rem;
+            border-left: 2px solid var(--accent);
+            padding-left: 1.5rem;
+            margin-left: 0.5rem;
+        }
+        .timeline-item::before {
+            content: "●";
+            position: absolute;
+            left: -0.65rem;
+            color: var(--accent);
+            background: var(--card-bg);
+        }
+
+        /* 媒体橱窗 */
+        .media-grid {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .media-card {
+            background: var(--code-bg);
+            padding: 0.6rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.85rem;
+        }
+
+        /* 评价 */
+        .testimonial {
+            background: var(--code-bg);
+            padding: 1rem;
+            border-radius: 1rem;
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+
+        /* 终端彩蛋 */
+        .terminal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: monospace;
+            visibility: hidden;
+            opacity: 0;
+            transition: 0.2s;
+        }
+        .terminal-overlay.active {
+            visibility: visible;
+            opacity: 1;
+        }
+        .terminal-window {
+            background: #0a0e1a;
+            width: 90%;
+            max-width: 600px;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            color: #00ff88;
+        }
+        .terminal-input {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        .terminal-input input {
+            flex: 1;
+            background: #1e293b;
+            border: none;
+            color: #00ff88;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+        }
+
+        /* 阅读进度条 */
+        .reading-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: var(--accent);
+            z-index: 1001;
+            transition: width 0.1s;
+        }
+
+        /* 现在页面特殊卡片 */
+        .now-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .now-item {
+            background: var(--code-bg);
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+        }
+
+        button, .clickable {
+            cursor: pointer;
         }
         footer {
             text-align: center;
             margin-top: 2rem;
-            font-size: 0.75rem;
-            opacity: 0.6;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
         }
         @media (max-width: 700px) {
             .container { padding: 1rem; }
-            .section-title { font-size: 1.7rem; }
+            .hero h1 { font-size: 2rem; }
         }
     </style>
 </head>
 <body>
+<div class="reading-progress" id="readingProgress"></div>
+<div class="theme-toggle" id="themeToggleBtn">🌙 暗黑</div>
+
 <div class="container">
-    <!-- 个人介绍 / 空灵创造者 -->
-    <section>
-        <div class="about-card">
-            <div class="avatar-placeholder">✨</div>
-            <div class="about-text">
-                <h3>⚡ Sheng · 音律编织者</h3>
-                <p>🎧 音乐制作人 / 独立开发者 / 数字艺术家。<br>
-                在代码与音符的交界处构建沉浸式体验。用声音塑造空间，用算法谱写梦境。<br>
-                “节奏是宇宙的母语，创造是灵魂的呼吸。”</p>
-                <div class="tag-list">
-                    <span class="tag">#AmbientElectronica</span>
-                    <span class="tag">#GenerativeArt</span>
-                    <span class="tag">#IndieDev</span>
-                    <span class="tag">#SoundDesign</span>
+    <!-- Hero + 关于我 -->
+    <div class="hero">
+        <div class="avatar" id="easterEggAvatar">🎧</div>
+        <h1>Sheng · 音律构筑者</h1>
+        <div class="tagline">音乐制作人 / 独立开发者 / 创意工程师</div>
+        <p style="max-width: 600px; margin: 1rem auto 0; color: var(--text-secondary);">用代码谱写旋律，用算法生成梦境。相信创造是唯一不会后悔的事。</p>
+    </div>
+
+    <!-- 关于我（升级版） -->
+    <div class="card">
+        <div class="section-title">📖 关于我 · 大白话版</div>
+        <p><strong>我是谁：</strong> 一个白天写代码、深夜做 beats 的斜杠青年。热爱把抽象逻辑变成可听可感的作品。</p>
+        <p><strong>我擅长：</strong> 音乐制作（Logic Pro / Ableton）、前端创意编程、独立游戏开发。最近沉迷于声音可视化与生成艺术。</p>
+        <p><strong>我感兴趣：</strong> 氛围电子、交互叙事、AI辅助创作。以及一切能让人「Wow」的创意技术。</p>
+        <div style="margin-top: 1rem;">
+            <span class="skill-tag">🎹 音乐制作8年</span>
+            <span class="skill-tag">⚛️ React/Vue</span>
+            <span class="skill-tag">🎮 独立开发</span>
+        </div>
+    </div>
+
+    <!-- 项目展示 Portfolio -->
+    <div class="card">
+        <div class="section-title">🚀 作品集 · 我解决了什么</div>
+        <div class="projects-grid">
+            <div class="project-card">
+                <h3>🎵 星尘回响 · 节奏游戏</h3>
+                <p>一个音乐可视化互动游戏，解决的是「让非专业玩家也能通过节奏获得心流体验」。利用Web Audio合成氛围+动态难度算法，玩家完美击中时绽放粒子特效。</p>
+                <div class="project-demo">🎮 在线体验 ↓ (网站内游戏厅模块)</div>
+            </div>
+            <div class="project-card">
+                <h3>✨ 声景生成器 · 创意工具</h3>
+                <p>用AI生成环境氛围音乐，解决了创作者寻找免版税氛围音乐的痛点。支持实时参数调制，输出高质量WAV。</p>
+                <div class="project-demo">🔊 技术栈: Tone.js + Python后端</div>
+            </div>
+            <div class="project-card">
+                <h3>📝 个人博客系统</h3>
+                <p>从0搭建的极简博客，解决「技术写作需要专注环境」的问题。支持Markdown、阅读时间预估、代码高亮。</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 互动式简历 时间轴 -->
+    <div class="card">
+        <div class="section-title">📜 互动简历 · 经历时间轴</div>
+        <div class="timeline">
+            <div class="timeline-item">
+                <strong>2024 - 至今</strong> | 独立音乐人/开发者<br>
+                发布个人EP《星尘组曲》，开发3款音乐互动网页，累计访问2w+。
+            </div>
+            <div class="timeline-item">
+                <strong>2022 - 2024</strong> | 某科技公司 · 前端工程师<br>
+                负责设计系统与可视化大屏，优化性能提升40%渲染效率。
+            </div>
+            <div class="timeline-item">
+                <strong>2020 - 2022</strong> | 自由职业 · 多媒体创作者<br>
+                为独立游戏配乐，制作多个音乐可视化作品。
+            </div>
+        </div>
+    </div>
+
+    <!-- 技能树 / 工具箱 -->
+    <div class="card">
+        <div class="section-title">🛠️ 技能 & 工具箱</div>
+        <div>
+            <strong>编程语言</strong>
+            <div><span class="skill-tag">JavaScript/TypeScript</span><span class="skill-tag">Python</span><span class="skill-tag">Rust</span></div>
+        </div>
+        <div style="margin-top: 1rem;">
+            <strong>框架/工具</strong>
+            <div><span class="skill-tag">React</span><span class="skill-tag">Vue3</span><span class="skill-tag">Node.js</span><span class="skill-tag">Three.js</span><span class="skill-tag">Web Audio</span></div>
+        </div>
+        <div style="margin-top: 1rem;">
+            <strong>创意软件</strong>
+            <div><span class="skill-tag">Ableton Live</span><span class="skill-tag">Logic Pro</span><span class="skill-tag">Figma</span><span class="skill-tag">TouchDesigner</span></div>
+        </div>
+        <p style="margin-top: 0.8rem; font-size:0.85rem;">※ 不用百分比条，因为成长永无止境 ✨</p>
+    </div>
+
+    <!-- 个人博客 带阅读进度 -->
+    <div class="card">
+        <div class="section-title">✍️ 个人博客 · 思维回响</div>
+        <div class="blog-list" id="blogList">
+            <div class="blog-item" data-blog-id="0">
+                <div class="blog-title">
+                    <span>关于独立开发者的时间管理哲学</span>
+                    <span class="reading-time">阅读 4 分钟</span>
                 </div>
+                <div class="blog-preview">很多人问我，既要写代码又要做音乐，时间怎么分配？我的答案是「主题月」... <strong>点击展开全文</strong></div>
+                <div class="blog-preview full-content" style="display:none;">全文：每个月我只聚焦一个大主题，比如「三月: 开发节奏游戏引擎」「四月: 混音母带进阶」，碎片时间用来输入而非产出。这样反而效率更高。核心原则：保护心流，拒绝多任务。</div>
             </div>
-        </div>
-    </section>
-
-    <!-- 音乐厅 -->
-    <section>
-        <h2 class="section-title">🎵 音乐厅 · 声景漫游</h2>
-        <div class="music-card">
-            <p>✨ 氛围电子 / 星尘叙事 —— 首支单曲现已上线。<br>戴上耳机，漂浮于声音的星云之间。</p>
-            <a href="https://www.flowmusic.app/song/d6a10fb3-6627-4c41-a9fc-5151d0ff1c29" target="_blank" class="listen-btn">🎧 沉浸试听 →</a>
-            <div style="margin-top: 1rem; font-size:0.8rem;">🎛️ 制作/母带：Sheng | 独立发行</div>
-        </div>
-    </section>
-
-    <!-- 全新游戏厅： 星尘回响 · 流光律动 -->
-    <section>
-        <h2 class="section-title">🌌 游戏厅 · 星尘回响 | 流光捕手</h2>
-        <div class="game-zone">
-            <div class="game-header">
-                <span class="game-title-badge">✨ 星轨共鸣 · 聆听宇宙的频率 ✨</span>
-                <div class="game-scoreboard">
-                    <span>✨ 灵韵: <strong id="rhythmScore">0</strong></span>
-                    <span>🏆 极光记录: <strong id="rhythmBest">0</strong></span>
-                    <span>🌀 星能: <strong id="rhythmLives">5</strong></span>
+            <div class="blog-item" data-blog-id="1">
+                <div class="blog-title">
+                    <span>Web Audio API 实践：从零构建合成器</span>
+                    <span class="reading-time">阅读 6 分钟</span>
                 </div>
+                <div class="blog-preview">OscillatorNode, GainNode 以及滤波器串联，带你写出第一个浏览器合成器... <strong>点击展开</strong></div>
+                <div class="blog-preview full-content" style="display:none;">全文：利用AudioContext创建振荡器，添加ADSR包络，最终实现一个可以响应鼠标位置改变音高的迷你合成器。代码片段已上传GitHub。这也是本站游戏厅的底层技术基石。</div>
             </div>
-            <div class="game-canvas-container">
-                <canvas id="stellCanvas" width="1100" height="520" style="width:100%; height:auto; border-radius: 28px;"></canvas>
-            </div>
-            <div class="game-controls">
-                <button id="restartGameBtn" class="ctrl-btn">🌠 重启星轨</button>
-                <button id="pauseGameBtn" class="ctrl-btn">⏸ 静默时域</button>
-            </div>
-            <div class="rhythm-stats">
-                💫 <strong>【星尘法则】</strong> 光晕音符会随节奏膨胀 — 在光芒最饱满的时刻触碰/点击！<br>
-                ⚡ 完美共鸣 +12分 / 轻微触碰 +6分 / 漏失消耗星能 | 连击会绽放星尘粒子
+            <div class="blog-item" data-blog-id="2">
+                <div class="blog-title">
+                    <span>2025 年度歌单 & 声音灵感</span>
+                    <span class="reading-time">阅读 2 分钟</span>
+                </div>
+                <div class="blog-preview">最近在循环 Ólafur Arnalds, 以及一些氛围 breaks。分享我的声音收集方式... <strong>点击展开</strong></div>
+                <div class="blog-preview full-content" style="display:none;">全文：使用Last.fm记录听歌历史 + 每月整理「声景笔记」，同时用网易云API抓取歌单。艺术是输入与输出的平衡。</div>
             </div>
         </div>
-    </section>
+    </div>
 
-    <!-- 留言区改为：灵感星云 · 访客回声 -->
-    <section>
-        <h2 class="section-title">📡 灵感星云 · 访客回声</h2>
-        <div class="guestbook-section" id="guestbookSection">
-            <div class="guestbook-title">🌙 星尘笔记本 · 留下思绪碎片</div>
-            <div class="message-form">
-                <input type="text" id="msgNameInput" placeholder="名字 / 代号 (例如: 星尘旅人)">
-                <textarea id="msgTextInput" rows="2" placeholder="分享此刻的感受、创作灵感或梦境..."></textarea>
-                <button id="submitMsgBtn">✨ 刻录星语</button>
-            </div>
-            <div id="messageListContainer" class="message-list"></div>
-        </div>
-    </section>
+    <!-- 客户/同行评价 -->
+    <div class="card">
+        <div class="section-title">💬 同行·伙伴说</div>
+        <div class="testimonial">“和Sheng合作游戏音频是一次享受，他总能精准理解叙事需求，而且产出的demo几乎不用修改。” — 独立游戏制作人 @林南</div>
+        <div class="testimonial" style="margin-top: 0.8rem;">“前端代码非常优雅，而且对用户体验细节有近乎偏执的追求。绝对是团队里最有创造力的工程师。” — 前同事 Emma</div>
+    </div>
 
-    <!-- 连接处 温和科技感 -->
-    <section>
-        <h2 class="section-title">🌐 星桥 · 连接</h2>
-        <div class="contact-card">
-            <p>📡 欢迎交流音乐、声音交互或独立创作</p>
-            <a href="mailto:shengdatasheng@gmail.com" class="email-link" style="background:#273c66; padding:0.6rem 1.8rem; border-radius: 50px; text-decoration:none; color:#cbebff;">📧 shengdatasheng@gmail.com</a>
-            <div style="margin-top: 1rem; display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap;">
-                <span>🎮 Steam: ShengThunder</span>
-                <span>🎵 网易云/Spotify: DATA_SHENG</span>
-                <span>🐦 X: @OKC_Sheng</span>
-            </div>
+    <!-- 现在页面 /now 热门概念 -->
+    <div class="card">
+        <div class="section-title">🌱 现在 · 进行时</div>
+        <p><strong>最近几周正在忙：</strong></p>
+        <div class="now-grid">
+            <span class="now-item">📖 在读《设计声音》</span>
+            <span class="now-item">🎧 循环播放：Nils Frahm 现场专辑</span>
+            <span class="now-item">💻 死磕: Rust + WebAssembly 音频处理</span>
+            <span class="now-item">🏋️ 挑战: 每日45分钟健身</span>
         </div>
-    </section>
-    <footer>✦ Sheng's Astral Garden · 音画交织 | 探索意识的边界 ✦</footer>
+        <p style="margin-top: 1rem; font-size:0.85rem;">(更新于 2026年6月 · 灵感来自 /now 运动)</p>
+    </div>
+
+    <!-- 媒体橱窗 + 音乐接入模拟 -->
+    <div class="card">
+        <div class="section-title">📀 媒体橱窗 · 灵感补给</div>
+        <div><strong>🎬 最近在看：</strong> 《拾荒者统治》—— 想象力爆棚的科幻动画</div>
+        <div style="margin-top: 0.5rem;"><strong>📚 书单：</strong> 《创意选择》《设计声音》《代码之髓》</div>
+        <div style="margin-top: 0.5rem;"><strong>🎵 近期在听 (Spotify风格)：</strong> <span id="nowPlaying">加载中...</span></div>
+        <div class="media-grid" style="margin-top: 0.8rem;">
+            <div class="media-card">🎸 年度歌单: 氛围电子/古典极简</div>
+            <div class="media-card">🎧 自制Mixtape: '星尘序曲'</div>
+        </div>
+    </div>
+
+    <!-- 趣味 Q&A + 冷知识 -->
+    <div class="card">
+        <div class="section-title">🤔 冷知识 · 趣味问答</div>
+        <p>☕ 每天必须喝: 冰美式 (不加糖 不加奶)<br>
+        😻 猫奴属性: 有一个叫「音符」的黑猫<br>
+        🧠 MBTI: INFJ (提倡者) — 理想主义但务实<br>
+        🎮 隐藏技能: 连续点击我头像会有惊喜 ✨</p>
+    </div>
+
+    <!-- 联系表单 / 极简 -->
+    <div class="card">
+        <div class="section-title">📬 联系 · 共振瞬间</div>
+        <form id="contactForm" style="display: flex; flex-direction: column; gap: 1rem;">
+            <input type="email" id="contactEmail" placeholder="你的邮箱" style="padding: 0.8rem; border-radius: 2rem; border: 1px solid var(--border-color); background: var(--bg-primary); color: var(--text-primary);">
+            <textarea id="contactMsg" rows="2" placeholder="说点什么吧..." style="padding: 0.8rem; border-radius: 1.2rem; border: 1px solid var(--border-color); background: var(--bg-primary);"></textarea>
+            <button type="submit" style="width: fit-content; background: var(--accent); border: none; padding: 0.6rem 1.8rem; border-radius: 3rem; color: white; font-weight: bold; cursor: pointer;">✨ 发送星信</button>
+        </form>
+        <div style="margin-top: 1rem; text-align: center;">
+            <a href="mailto:sheng@example.com" style="color: var(--accent);">📧 shengdatasheng@gmail.com</a>
+            <span style="margin: 0 1rem">|</span>
+            <a href="#" style="color: var(--accent);">🐙 GitHub</a>
+            <span style="margin: 0 0.5rem">|</span>
+            <a href="#" style="color: var(--accent);">🔗 LinkedIn</a>
+        </div>
+    </div>
+
+    <footer>✨ 保持创造 · 数字花园不断生长 | 本站支持暗黑模式 & 终端彩蛋 ✨</footer>
+</div>
+
+<!-- 终端彩蛋窗口 -->
+<div id="terminalModal" class="terminal-overlay">
+    <div class="terminal-window">
+        <div style="color:#fff;">⚡ Sheng 的终端接口 v1.0</div>
+        <div id="terminalOutput">输入 help 查看可执行命令</div>
+        <div class="terminal-input">
+            <span>$&nbsp;</span>
+            <input type="text" id="terminalCmd" autocomplete="off">
+        </div>
+        <button id="closeTerminal" style="margin-top: 1rem; background:#334155; border:none; padding:0.3rem 1rem; border-radius: 0.5rem; color:white;">关闭</button>
+    </div>
 </div>
 
 <script>
-    // ======================= 星尘回响 · 进阶律动游戏 =======================
-    (function(){
-        const canvas = document.getElementById('stellCanvas');
-        const ctx = canvas.getContext('2d');
-        const scoreSpan = document.getElementById('rhythmScore');
-        const bestSpan = document.getElementById('rhythmBest');
-        const livesSpan = document.getElementById('rhythmLives');
-        
-        let width = 1100, height = 520;
-        canvas.width = width;
-        canvas.height = height;
-        
-        let gameActive = true;
-        let paused = false;
-        let score = 0;
-        let lives = 5;
-        let combo = 0;
-        let bestScore = localStorage.getItem('stellBestScore') ? parseInt(localStorage.getItem('stellBestScore')) : 0;
-        bestSpan.innerText = bestScore;
-        
-        let notes = [];
-        let particles = [];
-        let lastSpawn = 0;
-        let lastFrameTime = 0;
-        let animFrame;
-        
-        function dynamicInterval() {
-            let interval = Math.max(360, 980 - Math.floor(score / 20) * 12);
-            return interval;
-        }
-        
-        function updateUI() {
-            scoreSpan.innerText = score;
-            livesSpan.innerText = lives;
-            if(score > bestScore) {
-                bestScore = score;
-                localStorage.setItem('stellBestScore', bestScore);
-                bestSpan.innerText = bestScore;
+    // 暗黑模式切换 + 本地存储
+    const toggleBtn = document.getElementById('themeToggleBtn');
+    if(localStorage.getItem('theme') === 'dark') document.body.classList.add('dark');
+    toggleBtn.addEventListener('click', () => {
+        document.body.classList.toggle('dark');
+        localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+        toggleBtn.innerText = document.body.classList.contains('dark') ? '☀️ 明亮' : '🌙 暗黑';
+    });
+    toggleBtn.innerText = document.body.classList.contains('dark') ? '☀️ 明亮' : '🌙 暗黑';
+
+    // 博客展开/折叠功能 + 阅读进度条
+    const blogItems = document.querySelectorAll('.blog-item');
+    blogItems.forEach(item => {
+        const titleDiv = item.querySelector('.blog-title');
+        const preview = item.querySelector('.blog-preview');
+        const fullContent = item.querySelector('.full-content');
+        titleDiv.addEventListener('click', () => {
+            if(fullContent.style.display === 'none') {
+                fullContent.style.display = 'block';
+                preview.style.display = 'none';
+            } else {
+                fullContent.style.display = 'none';
+                preview.style.display = 'block';
             }
+        });
+    });
+
+    // 滚动阅读进度条
+    window.addEventListener('scroll', () => {
+        const winScroll = document.documentElement.scrollTop;
+        const height = document.documentElement.scrollHeight - window.innerHeight;
+        const scrolled = (winScroll / height) * 100;
+        document.getElementById('readingProgress').style.width = scrolled + '%';
+    });
+
+    // 复活节彩蛋: 连续点击头像5次触发撒花 (简单模拟)
+    let avatarClickCount = 0;
+    const avatarDiv = document.querySelector('.avatar');
+    avatarDiv.addEventListener('click', () => {
+        avatarClickCount++;
+        if(avatarClickCount >= 5) {
+            alert('✨ 彩蛋触发！你发现了隐藏的魔法 ✨\n“保持好奇，世界充满韵律”');
+            avatarClickCount = 0;
+            // 简单撒花效果
+            confettiEffect();
         }
-        
-        // 星尘粒子特效
-        function addStarBurst(x, y, baseColor, perfect) {
-            let count = perfect ? 24 : 12;
-            for(let i=0;i<count;i++) {
-                let angle = Math.random() * Math.PI * 2;
-                let speed = 70 + Math.random() * 180;
-                let vx = Math.cos(angle) * speed;
-                let vy = Math.sin(angle) * speed;
-                particles.push({
-                    x, y, vx, vy, life: 0.6, size: 2 + Math.random() * 6,
-                    color: perfect ? `hsl(${Math.random() * 80 + 200}, 80%, 70%)` : baseColor
-                });
-            }
+        setTimeout(() => { avatarClickCount = 0; }, 2000);
+    });
+
+    function confettiEffect() {
+        // 简易模拟撒花
+        for(let i=0;i<50;i++) {
+            const dot = document.createElement('div');
+            dot.innerText = '✨';
+            dot.style.position = 'fixed';
+            dot.style.left = Math.random() * window.innerWidth + 'px';
+            dot.style.top = '0px';
+            dot.style.fontSize = '20px';
+            dot.style.pointerEvents = 'none';
+            dot.style.zIndex = '9999';
+            dot.style.animation = `fall ${Math.random() * 2 + 1}s linear forwards`;
+            document.body.appendChild(dot);
+            setTimeout(() => dot.remove(), 2000);
         }
-        
-        function spawnNote(now) {
-            if(!gameActive || paused) return;
-            let interval = dynamicInterval();
-            if(now - lastSpawn < interval) return;
-            lastSpawn = now;
-            const radiusBase = 22 + Math.random() * 20;
-            const x = 45 + Math.random() * (width - 90);
-            const y = 55 + Math.random() * (height - 110);
-            const duration = 780;
-            const hue = (Date.now() * 0.6 + Math.random() * 360) % 360;
-            const color = `hsl(${hue}, 85%, 68%)`;
-            notes.push({
-                id: Math.random(),
-                x, y, maxRadius: radiusBase, startTime: now, endTime: now + duration, 
-                color, hit: false, hue
-            });
+    }
+    const style = document.createElement('style');
+    style.textContent = `@keyframes fall { to { transform: translateY(100vh); opacity:0; } }`;
+    document.head.appendChild(style);
+
+    // 终端彩蛋: 键盘上下左右（上上下下左右左右BA）
+    let konami = [];
+    const konamiCode = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','B','a','A'];
+    document.addEventListener('keydown', (e) => {
+        konami.push(e.key);
+        if(konami.length > 12) konami.shift();
+        if(konami.join(',').includes(konamiCode.join(','))) {
+            document.getElementById('terminalModal').classList.add('active');
+            konami = [];
         }
-        
-        function handleHit(clientX, clientY) {
-            if(!gameActive || paused) return false;
-            const rect = canvas.getBoundingClientRect();
-            const scaleX = canvas.width / rect.width;
-            const scaleY = canvas.height / rect.height;
-            let canvasX = (clientX - rect.left) * scaleX;
-            let canvasY = (clientY - rect.top) * scaleY;
-            canvasX = Math.min(width, Math.max(0, canvasX));
-            canvasY = Math.min(height, Math.max(0, canvasY));
-            
-            let bestIdx = -1;
-            let minDist = 35;
-            const nowPerf = performance.now();
-            for(let i=0;i<notes.length;i++) {
-                const n = notes[i];
-                if(n.hit) continue;
-                let t = (nowPerf - n.startTime) / (n.endTime - n.startTime);
-                t = Math.min(0.99, Math.max(0, t));
-                let curRad = n.maxRadius * t;
-                if(curRad < 6) curRad = 6;
-                const dist = Math.hypot(canvasX - n.x, canvasY - n.y);
-                if(dist <= curRad + 12 && dist < minDist) {
-                    minDist = dist;
-                    bestIdx = i;
-                }
-            }
-            if(bestIdx !== -1) {
-                const note = notes[bestIdx];
-                const nowCheck = performance.now();
-                let progress = (nowCheck - note.startTime) / (note.endTime - note.startTime);
-                let perfect = (progress >= 0.45 && progress <= 0.85);
-                let gain = perfect ? 12 : 6;
-                score += gain;
-                combo++;
-                addStarBurst(note.x, note.y, note.color, perfect);
-                note.hit = true;
-                updateUI();
-                if(navigator.vibrate) navigator.vibrate(28);
-                return true;
-            }
-            return false;
+    });
+
+    // 终端命令逻辑
+    const terminalModal = document.getElementById('terminalModal');
+    const terminalCmd = document.getElementById('terminalCmd');
+    const terminalOutput = document.getElementById('terminalOutput');
+    document.getElementById('closeTerminal').addEventListener('click', () => {
+        terminalModal.classList.remove('active');
+    });
+    terminalCmd.addEventListener('keypress', (e) => {
+        if(e.key === 'Enter') {
+            const cmd = terminalCmd.value.trim().toLowerCase();
+            let output = '';
+            if(cmd === 'help') output = '可用命令: about, projects, contact, skills, now, clear';
+            else if(cmd === 'about') output = 'Sheng: 音乐制作人/独立开发者，擅长创意编程与声音设计。';
+            else if(cmd === 'projects') output = '作品: 星尘回响游戏、声景生成器、互动博客。详情见网站作品集模块。';
+            else if(cmd === 'contact') output = '邮箱: shengdatasheng@gmail.com | GitHub: github.com/sheng';
+            else if(cmd === 'skills') output = '技术栈: React, Vue, Node, Web Audio, Python, Rust. 创意: Ableton, Figma';
+            else if(cmd === 'now') output = '正在读《设计声音》，钻研Rust+Wasm，循环Nils Frahm。';
+            else if(cmd === 'clear') { terminalOutput.innerHTML = ''; terminalCmd.value = ''; return; }
+            else output = `未知命令: ${cmd}. 输入 help 获取帮助`;
+            terminalOutput.innerHTML += `<div>> ${cmd}</div><div>${output}</div>`;
+            terminalCmd.value = '';
         }
-        
-        function updateMissed(now) {
-            for(let i=0;i<notes.length;i++) {
-                const n = notes[i];
-                if(n.hit) continue;
-                if(now >= n.endTime) {
-                    n.hit = true;
-                    if(gameActive && !paused) {
-                        lives--;
-                        combo = 0;
-                        addStarBurst(n.x, n.y, '#ff8888', false);
-                        if(lives <= 0) {
-                            gameActive = false;
-                            lives = 0;
-                            updateUI();
-                        }
-                        updateUI();
-                    }
-                }
-            }
-            notes = notes.filter(n => !n.hit);
-        }
-        
-        function updateParticles(delta) {
-            for(let i=0;i<particles.length;i++) {
-                let p = particles[i];
-                p.x += p.vx * delta;
-                p.y += p.vy * delta;
-                p.life -= delta;
-                p.vy += 180 * delta;
-                if(p.life <= 0) {
-                    particles.splice(i,1);
-                    i--;
-                }
-            }
-        }
-        
-        function draw(now) {
-            if(!ctx) return;
-            ctx.clearRect(0, 0, width, height);
-            // 绘制星轨网格
-            for(let i=0;i<24;i++) {
-                ctx.beginPath();
-                let alpha = 0.06 + Math.sin(now * 0.0015 + i) * 0.04;
-                ctx.strokeStyle = `rgba(120, 180, 255, ${alpha})`;
-                ctx.lineWidth = 0.8;
-                ctx.moveTo(i * 55, 0);
-                ctx.lineTo(width, i * 42);
-                ctx.stroke();
-                ctx.moveTo(0, i * 42);
-                ctx.lineTo(width - i * 50, height);
-                ctx.stroke();
-            }
-            // 音符绘制
-            for(let n of notes) {
-                let t = (now - n.startTime) / (n.endTime - n.startTime);
-                t = Math.min(0.99, Math.max(0, t));
-                let curRad = n.maxRadius * t;
-                if(curRad < 4) curRad = 4;
-                ctx.shadowBlur = 18;
-                ctx.shadowColor = `hsl(${n.hue}, 85%, 70%)`;
-                ctx.beginPath();
-                ctx.arc(n.x, n.y, curRad, 0, Math.PI*2);
-                ctx.fillStyle = n.color;
-                ctx.fill();
-                ctx.beginPath();
-                ctx.arc(n.x, n.y, curRad * 0.7, 0, Math.PI*2);
-                ctx.fillStyle = `rgba(255, 230, 160, 0.9)`;
-                ctx.fill();
-                ctx.beginPath();
-                ctx.arc(n.x, n.y, curRad * 0.35, 0, Math.PI*2);
-                ctx.fillStyle = `rgba(255, 210, 100, 1)`;
-                ctx.fill();
-            }
-            ctx.shadowBlur = 0;
-            for(let p of particles) {
-                ctx.globalAlpha = p.life;
-                ctx.fillStyle = p.color;
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.size, 0, Math.PI*2);
-                ctx.fill();
-            }
-            ctx.globalAlpha = 1;
-            ctx.font = "500 20px 'JetBrains Mono'";
-            ctx.fillStyle = "#e2eeff";
-            if(combo >= 3) ctx.fillText(`✦ ${combo} 共鸣 ✦`, width-140, 55);
-            if(!gameActive && lives <= 0) {
-                ctx.font = "500 32px system-ui";
-                ctx.fillStyle = "#ffb781";
-                ctx.fillText("星轨沉寂 · 重启旅程", width/2-150, height/2);
-            } else if(paused && gameActive) {
-                ctx.font = "500 32px system-ui";
-                ctx.fillStyle = "#9cc0ff";
-                ctx.fillText("✦ 静默星域 ✦", width/2-110, height/2);
-            }
-        }
-        
-        let lastLoop = 0;
-        function gameLoop(nowMs) {
-            if(!gameActive && lives <= 0) {
-                draw(nowMs);
-                animFrame = requestAnimationFrame(gameLoop);
-                return;
-            }
-            if(paused) {
-                draw(nowMs);
-                animFrame = requestAnimationFrame(gameLoop);
-                return;
-            }
-            let delta = Math.min(0.033, (nowMs - lastLoop) / 1000);
-            if(delta > 0.01) lastLoop = nowMs;
-            spawnNote(nowMs);
-            updateMissed(nowMs);
-            updateParticles(delta);
-            draw(nowMs);
-            animFrame = requestAnimationFrame(gameLoop);
-        }
-        
-        function attachEvents() {
-            const hitHandler = (e) => {
-                e.preventDefault();
-                let cx, cy;
-                if(e.touches) {
-                    cx = e.touches[0].clientX;
-                    cy = e.touches[0].clientY;
-                } else {
-                    cx = e.clientX;
-                    cy = e.clientY;
-                }
-                handleHit(cx, cy);
-            };
-            canvas.addEventListener('click', hitHandler);
-            canvas.addEventListener('touchstart', hitHandler, { passive: false });
-        }
-        
-        function restartGame() {
-            gameActive = true;
-            paused = false;
-            score = 0;
-            lives = 5;
-            combo = 0;
-            notes = [];
-            particles = [];
-            lastSpawn = performance.now();
-            updateUI();
-        }
-        function togglePause() {
-            if(!gameActive && lives<=0) return;
-            paused = !paused;
-        }
-        document.getElementById('restartGameBtn').addEventListener('click', restartGame);
-        document.getElementById('pauseGameBtn').addEventListener('click', togglePause);
-        
-        attachEvents();
-        restartGame();
-        lastLoop = performance.now();
-        animFrame = requestAnimationFrame(gameLoop);
-        
-        // 轻量氛围音频(星尘笙鸣)
-        let audioCtx = null;
-        function initAmbientAudio() {
-            if(audioCtx) return;
-            try {
-                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                const master = audioCtx.createGain();
-                master.gain.value = 0.07;
-                master.connect(audioCtx.destination);
-                function playPad() {
-                    if(!audioCtx || paused || !gameActive) return;
-                    const osc = audioCtx.createOscillator();
-                    const gain = audioCtx.createGain();
-                    osc.type = 'sine';
-                    osc.frequency.value = 68 + Math.sin(Date.now() * 0.0007) * 2.5;
-                    gain.gain.value = 0.04;
-                    osc.connect(gain);
-                    gain.connect(master);
-                    osc.start();
-                    gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 2.8);
-                    osc.stop(audioCtx.currentTime + 2.8);
-                }
-                setInterval(() => { if(audioCtx && !paused && gameActive && audioCtx.state === 'running') playPad(); }, 2400);
-                audioCtx.resume();
-            } catch(e) {}
-        }
-        initAmbientAudio();
-        canvas.addEventListener('click', () => { if(audioCtx && audioCtx.state === 'suspended') audioCtx.resume(); });
-    })();
-    
-    // 星尘笔记本 · 留言板（无篮球风格，纯灵感碎片）
-    (function(){
-        const STORAGE_KEY = "stardust_messages";
-        const container = document.getElementById('messageListContainer');
-        const nameInput = document.getElementById('msgNameInput');
-        const textInput = document.getElementById('msgTextInput');
-        const submitBtn = document.getElementById('submitMsgBtn');
-        
-        function loadMessages() { let stored=localStorage.getItem(STORAGE_KEY); return stored?JSON.parse(stored):[]; }
-        function saveMessages(msgs) { localStorage.setItem(STORAGE_KEY,JSON.stringify(msgs)); }
-        function formatDate(d) { return `${d.getMonth()+1}/${d.getDate()} ${d.getHours().toString().padStart(2,'0')}:${d.getMinutes().toString().padStart(2,'0')}`; }
-        function escapeHtml(str) { if(!str) return ''; return str.replace(/[&<>]/g, m => m==='&'?'&amp;': m==='<'?'&lt;':'&gt;'); }
-        
-        function renderMessages() {
-            let msgs = loadMessages();
-            if(!msgs.length) { container.innerHTML = '<div class="empty-comments" style="color:#bdd0ff; text-align:center;">✨ 星尘笔记本等待第一缕思绪 ✨</div>'; return; }
-            let html = '';
-            msgs.forEach((m, idx) => {
-                html += `<div class="message-item"><button class="delete-msg" data-idx="${idx}">🗑️</button><div><span class="message-name">${escapeHtml(m.name)}</span> <span style="font-size:0.7rem;">${m.time}</span></div><div>${escapeHtml(m.text)}</div></div>`;
-            });
-            container.innerHTML = html;
-            document.querySelectorAll('.delete-msg').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    let idx = parseInt(btn.getAttribute('data-idx'));
-                    let arr = loadMessages(); arr.splice(idx,1); saveMessages(arr); renderMessages();
-                });
-            });
-        }
-        
-        function addMessage(name, text) {
-            if(!text.trim()) return false;
-            let msgs = loadMessages();
-            msgs.unshift({ name: name.trim() || "星尘旅人", text: text.trim(), time: formatDate(new Date()) });
-            saveMessages(msgs);
-            renderMessages();
-            return true;
-        }
-        
-        submitBtn.onclick = () => {
-            if(!textInput.value.trim()) { alert("留下一缕星尘思绪吧"); return; }
-            addMessage(nameInput.value, textInput.value);
-            nameInput.value = '';
-            textInput.value = '';
-        };
-        renderMessages();
-    })();
+    });
+
+    // 模拟当前播放音乐 (媒体橱窗)
+    const tracks = ['Ólafur Arnalds - re:member', 'Nils Frahm - Says', 'Kiasmos - Blurred'];
+    let idx = 0;
+    document.getElementById('nowPlaying').innerText = tracks[0];
+    setInterval(() => { idx = (idx+1)%tracks.length; document.getElementById('nowPlaying').innerText = tracks[idx]; }, 5000);
+
+    // 简易联系表单 (模拟)
+    document.getElementById('contactForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        alert('✨ 感谢留言，我会尽快回复你的星信 ✨');
+        document.getElementById('contactForm').reset();
+    });
+
+    // 添加RSS说明 (不暴露复杂后端但提供理念)
+    console.log("RSS订阅源可用: /rss.xml (模拟概念) 或 通过 email newsletter 跟进");
 </script>
 </body>
 </html>
