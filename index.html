@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Sheng的个人世界 | 音乐·游戏·博客</title>
+    <title>Sheng的个人世界 | 音乐·游戏·创意工坊</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            user-select: none; /* 提升互动游戏区域的沉浸感，防止拖动误选 */
         }
 
         body {
@@ -152,157 +153,91 @@
             box-shadow: 0 8px 20px #1e40af40;
         }
 
-        /* 游戏厅区 */
+        /* 全新游戏厅——节奏光域 · 音乐可视化互动 */
         .game-zone {
-            background: #0c1020;
+            background: #0a0e1c;
             border-radius: 1.8rem;
-            border: 1px solid #2a3655;
+            border: 1px solid #3b4b7a;
             overflow: hidden;
-            padding: 0;
-        }
-
-        .game-frame {
-            background: #070b14;
-            padding: 1rem;
-            text-align: center;
-            border-bottom: 1px solid #2a3a60;
-        }
-
-        .highscore-table {
-            background: #0b0f18;
-            padding: 1.2rem 1.8rem;
-            border-top: 1px solid #2a3a60;
-        }
-
-        .highscore-table h3 {
-            font-size: 1.4rem;
-            font-family: monospace;
-            letter-spacing: 1px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 1rem;
-            color: #facc15;
-        }
-
-        .score-list {
-            list-style: none;
-            font-family: 'Courier New', monospace;
-            font-weight: bold;
-            font-size: 1.2rem;
-        }
-
-        .score-list li {
-            display: flex;
-            justify-content: space-between;
-            padding: 0.6rem 0;
-            border-bottom: 1px dashed #2a3655;
-        }
-
-        /* 博客折叠样式 */
-        .blog-wrapper {
-            margin-bottom: 1.5rem;
-            border-radius: 1.8rem;
-            background: transparent;
-        }
-        .blog-post {
-            background: #fef9ef;
-            color: #1e1e2f;
-            border-radius: 1.8rem;
-            padding: 1.5rem 2rem;
-            box-shadow: 0 12px 24px -12px rgba(0,0,0,0.3);
-            border: 1px solid #ffdd99;
+            box-shadow: 0 20px 30px -10px black;
             transition: all 0.2s;
         }
-        .blog-header {
+
+        .game-header {
+            background: #11172b;
+            padding: 0.8rem 1.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            cursor: pointer;
-            user-select: none;
+            flex-wrap: wrap;
+            gap: 12px;
+            border-bottom: 1px solid #2d4270;
         }
-        .blog-title {
-            font-size: 1.7rem;
-            font-weight: 800;
-            border-left: 6px solid #c2410c;
-            padding-left: 1rem;
-            color: #2c2c2c;
-            margin: 0;
-        }
-        .toggle-icon {
-            font-size: 1.8rem;
-            background: #f0dbc0;
-            width: 40px;
-            height: 40px;
+        .game-title-badge {
+            font-weight: 700;
+            background: #facc1530;
+            padding: 0.3rem 1rem;
             border-radius: 40px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            transition: 0.2s;
-            color: #b45309;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
         }
-        .blog-meta {
+        .game-scoreboard {
+            display: flex;
+            gap: 24px;
+            background: #03061766;
+            padding: 0.3rem 1rem;
+            border-radius: 60px;
             font-family: monospace;
-            color: #7f6b4a;
-            margin: 0.8rem 0 0 0;
-            font-size: 0.8rem;
-        }
-        .blog-content {
-            margin-top: 1.5rem;
-            padding-top: 0.5rem;
-            border-top: 1px dashed #e2cfb3;
-            display: none;
-        }
-        .blog-content.show {
-            display: block;
-        }
-        .blog-content h3 {
-            margin: 1.2rem 0 0.6rem;
-            font-weight: 700;
-            font-size: 1.35rem;
-            color: #b45309;
-        }
-        .blog-content h4 {
-            font-weight: 700;
-            margin: 0.8rem 0 0.3rem;
-            color: #9b2c1d;
-        }
-        .blog-content table {
-            width: 100%;
-            border-collapse: collapse;
-            background: #fff6e8;
-            margin: 1rem 0;
-            border-radius: 16px;
-            overflow: hidden;
-        }
-        .blog-content th, .blog-content td {
-            border: 1px solid #e2cfb3;
-            padding: 0.5rem;
-            text-align: left;
-        }
-        .blog-content th {
-            background: #e7cfaa;
-        }
-        .highlight {
-            background: #fde68a;
-            padding: 0.1rem 0.3rem;
             font-weight: bold;
-            border-radius: 8px;
         }
-        .quote-note {
-            background: #e9e0ce;
-            padding: 0.8rem 1.2rem;
-            border-left: 6px solid #f97316;
-            border-radius: 1rem;
-            font-style: italic;
-            margin: 1rem 0;
+        .game-canvas-container {
+            background: #010104;
+            display: flex;
+            justify-content: center;
         }
-        .blog-footer {
-            margin-top: 1.5rem;
-            padding-top: 0.8rem;
-            border-top: 2px dotted #cdb891;
-            font-size: 0.8rem;
-            color: #7b623c;
+        canvas#rhythmCanvas {
+            width: 100%;
+            height: auto;
+            background: radial-gradient(circle at 30% 20%, #111522, #03050c);
+            display: block;
+            cursor: crosshair;
+        }
+        .game-controls {
+            background: #0c1122cc;
+            padding: 1rem;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            border-top: 1px solid #2a3b62;
+        }
+        .ctrl-btn {
+            background: #292e4e;
+            border: none;
+            font-weight: bold;
+            padding: 0.5rem 1.6rem;
+            border-radius: 3rem;
+            color: #f0f3ff;
+            font-size: 0.9rem;
+            transition: 0.1s linear;
+            cursor: pointer;
+            box-shadow: 0 3px 0 #12162c;
+        }
+        .ctrl-btn:active {
+            transform: translateY(2px);
+            box-shadow: none;
+        }
+        .rhythm-stats {
+            background: #050a18;
+            padding: 0.6rem 1.2rem;
+            text-align: center;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            color: #b9e2ff;
+            border-top: 1px solid #2c3f6e;
+        }
+        .best-score {
+            color: #ffd966;
+            font-weight: 800;
         }
 
         /* 评论区 */
@@ -424,18 +359,9 @@
             font-size: 0.7rem;
             color: #facc15;
         }
-        .custom-game-stats {
-            display: flex;
-            justify-content: space-between;
-            background: #15232ecc;
-            padding: 6px 16px;
-            border-radius: 40px;
-            margin-bottom: 12px;
-        }
         @media (max-width: 700px) {
             .container { padding: 1rem; }
             .section-title { font-size: 1.6rem; }
-            .blog-title { font-size: 1.3rem; }
         }
     </style>
 </head>
@@ -448,13 +374,13 @@
             <div class="about-text">
                 <h3>⚡ Sheng · 独立创作者</h3>
                 <p>🎹 音乐制作人 / 🎮 独立游戏爱好者 / 🏀 雷霆死忠球迷。<br>
-                白天写代码，夜晚做 beats，偶尔在博客区写下关于篮球的热血文字。相信创造力和韧性可以改变一切。<br>
+                白天写代码，夜晚做 beats，用代码构建交互艺术。相信创造力和韧性可以改变一切。<br>
                 “Thunder Up, 保持热爱。”</p>
                 <div class="tag-list">
                     <span class="tag">#LoFi & Beats</span>
-                    <span class="tag">#GameMaker</span>
+                    <span class="tag">#CreativeCoding</span>
                     <span class="tag">#ThunderNation</span>
-                    <span class="tag">#IndieDev</span>
+                    <span class="tag">#AudioVisual</span>
                 </div>
             </div>
         </div>
@@ -470,84 +396,39 @@
         </div>
     </section>
 
-    <!-- 游戏厅 -->
+    <!-- 游戏厅全新升级：节奏光域·音波捕手（音乐可视化+反应力） -->
     <section>
-        <h2 class="section-title">👾 游戏厅 · 形状捕手</h2>
+        <h2 class="section-title">🎧 游戏厅 · 节奏光域 | 律动捕捉者</h2>
         <div class="game-zone">
-            <div class="game-frame">
-                <div style="display: flex; justify-content: space-between; margin-bottom: 0.6rem;">
-                    <span>🎮 开机即玩 · 点击彩色形状得分</span>
-                    <span class="badge">⚡ 速度越快 出现越快</span>
+            <div class="game-header">
+                <span class="game-title-badge">⚡ 音乐可视化 · 敲击光点 · 随律动摇摆</span>
+                <div class="game-scoreboard">
+                    <span>✨ 积分: <strong id="rhythmScore">0</strong></span>
+                    <span>🏆 最高分: <strong id="rhythmBest">0</strong></span>
                 </div>
-                <div id="shapeCatcherRoot"></div>
             </div>
-            <div class="highscore-table">
-                <h3>🏆 本地高分榜</h3>
-                <ul class="score-list">
-                    <li><span>🥇 你的极限</span><span id="staticHighScoreDisplay" style="color:#facc15;">0</span></li>
-                    <li><span>🥈 反应王者</span><span>超越自我</span></li>
-                    <li><span>🥉 速度之星</span><span>等你刷新</span></li>
-                </ul>
+            <div class="game-canvas-container">
+                <canvas id="rhythmCanvas" width="1000" height="500" style="width:100%; height:auto; background: radial-gradient(circle at 30% 20%, #111522, #03050c); border-radius: 24px;"></canvas>
+            </div>
+            <div class="game-controls">
+                <button id="restartGameBtn" class="ctrl-btn">🌀 重生乐章</button>
+                <button id="pauseGameBtn" class="ctrl-btn">⏸️ 暂停/继续</button>
+            </div>
+            <div class="rhythm-stats">
+                💡 玩法说明：彩色音符圈会随着音波律动扩散，<strong style="color:#ffb347;">在光圈最亮时点击/触摸</strong> 完美得分+10，普通+5，错过扣1点生命值。<br>
+                🌟 背景音乐由程序生成的“电子律动”实时合成，每次点击都会触发一个闪亮的音符反馈。
             </div>
         </div>
     </section>
 
-    <!-- 博客区域：两篇文章，均支持折叠 -->
+    <!-- 评论区保留 -->
     <section>
-        <h2 class="section-title">✍️ 个人博客 · Thunder Soul</h2>
-        
-        <!-- 博客1：常规赛复盘 -->
-        <div class="blog-wrapper">
-            <div class="blog-post">
-                <div class="blog-header" onclick="toggleBlog(this)">
-                    <div class="blog-title">2026 NBA 常规赛复盘：我的主队雷霆</div>
-                    <div class="toggle-icon">▼</div>
-                </div>
-                <div class="blog-meta">📅 2026年5月26日 · 俄克拉荷马城</div>
-                <div class="blog-content">
-                    <p>说实话，虽然是新球迷，之前关注不算多。但 2025-26 赛季，不一样了。这支雷霆，让我第一次有了那种<strong class="highlight">“我们真的回来了”</strong>的笃定感。<strong>64 胜 18 负、西部第一；</strong>常规赛场均 119.0 分；连续第三年首轮横扫——数据很冷，但背后的故事很烫。</p>
-                    <h3>📊 第一部分：数字背后的故事——64 胜的含金量</h3>
-                    <table><thead><tr><th>指标</th><th>数据</th><th>联盟排名</th></tr></thead><tbody><tr><td>常规赛战绩</td><td><strong>64胜18负</strong></td><td>西部第1</td></tr><tr><td>场均得分</td><td><strong>119.0分</strong></td><td>联盟前5</td></tr><tr><td>场均失分</td><td>107.9分</td><td>防守效率顶级</td></tr><tr><td>净胜分</td><td><strong>+11.1分</strong></td><td>联盟第1</td></tr></tbody></table>
-                    <p>64 胜是什么概念？这是雷霆队史最佳战绩。前26场24胜2负，最后23场21胜2负。这更像一出三幕剧：统治·挣扎·回应。</p>
-                    <h3>⚡ 年度高光：横扫湖人，场均净胜25.1分</h3>
-                    <p>5月12日西部半决赛G4，115-110，雷霆对湖人8胜0负，场均净胜25.1分创造纪录。SGA平静拥抱对手，冷静且有力。</p>
-                    <div class="quote-note">属于我们的三巨头：SGA、杰威、切特，加上替补妖刀阿杰·米切尔。年轻且不可阻挡。</div>
-                    <div class="blog-footer">📌 彩蛋：SGA面瘫庆祝、多尔特锁死时刻、主场OKC声浪。</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 博客2：西决G5前瞻（全新文章） -->
-        <div class="blog-wrapper">
-            <div class="blog-post">
-                <div class="blog-header" onclick="toggleBlog(this)">
-                    <div class="blog-title">西决 G5 前瞻：没有杰威和米切尔，雷霆的天王山怎么打？</div>
-                    <div class="toggle-icon">▼</div>
-                </div>
-                <div class="blog-meta">📅 2026年5月28日 · 前瞻预测</div>
-                <div class="blog-content">
-                    <p><strong>写在前面：这不是雷霆第一次被看衰</strong></p>
-                    <p>先看一组残酷的数字：<br>杰伦·威廉姆斯：西决场均 21.3分 + 5.8篮板 + 4.5助攻，命中率 51%<br>阿杰·米切尔：季后赛替补场均 15.1分，三分命中率 43%<br>两个人都打不了 G5。<br>消息一出，各大平台的预测风向几乎一边倒——马刺主场，雷霆残阵，系列赛 2-2，天平似乎已经彻底倾斜。<br>但如果你追了这支雷霆足够久，你会知道一件事：<strong>这支球队，从来不在被看衰时倒下。</strong></p>
-                    <h3>第一，进攻端：谁来填补 36.4 分的空缺？</h3>
-                    <p>杰威 + 米切尔，场均加起来 36.4 分。缺少两个能自主进攻的球员，SGA 面临的防守压力前所未有。<br><strong>卡森·华莱士，该你站出来了</strong>：二年级，常规赛场均8.7分，三分命中率41.2%。G5他需要投进空位三分，分担持球压力。<br><strong>以赛亚·乔</strong>：更早更快的出手，创造空间价值。<br><strong>切特·霍姆格伦</strong>：低位惩罚错位，文班协防时坚决背打。</p>
-                    <h3>第二，防守端：没有杰威，谁来对位瓦塞尔？</h3>
-                    <p>杰威对位瓦塞尔限制命中率仅38%。G5多尔特别锁凯尔登，用团队轮转限制瓦塞尔，甚至夹击+轮转赌底角三分。雷霆是全联盟外线轮转最快的球队之一。</p>
-                    <h3>第三，X因素：SGA 需要一场"MVP式"的接管</h3>
-                    <p>当杰威缺阵时，SGA场均34.7分+6.3篮板+7.1助攻，使用率37%。面对文班蹲坑+换防，他需要更多的中距离干拔、造犯规以及快速出球。如果SGA打出40+，雷霆赢球希望大增。</p>
-                    <h3>第四，心态：雷霆的最大优势可能不是阵容</h3>
-                    <p>杰威受伤期间10战8胜；西决G1输后G2大胜15分；本赛季ESPN预测胜率<50%时，雷霆16胜6负。越是看衰，越危险。AT&T中心的嘘声只会成为燃料。</p>
-                    <div class="quote-note">雷霆赢球条件：角色球员10+三分，切特惩罚错位，SGA砍下40+，瓦塞尔限制在20分以下。马刺赢球则靠文班25+15+5和瓦塞尔爆发。</div>
-                    <p>作为一个追了雷霆十几年的球迷，我说不出“雷霆一定会赢”，但我会穿上SGA球衣，打开直播，然后相信。因为这支雷霆，从来没有让我失望过。<br><strong>⚡ Thunder Up，G5 见。</strong></p>
-                </div>
-            </div>
-        </div>
-
-        <!-- 评论区 -->
+        <h2 class="section-title">💬 球迷回响 · 一起聊球</h2>
         <div class="comment-section" id="commentSection">
-            <div class="comment-title">💬 球迷回响 · 一起聊球</div>
+            <div class="comment-title">⚡ 雷霆国度 · 声音广场</div>
             <div class="comment-form">
                 <input type="text" id="commentNameInput" placeholder="昵称 (例如: OKC铁粉)">
-                <textarea id="commentTextInput" rows="2" placeholder="写下你对雷霆的激情、对文章的看法..."></textarea>
+                <textarea id="commentTextInput" rows="2" placeholder="写下你对雷霆的激情、对新游戏的建议..."></textarea>
                 <button id="submitCommentBtn">📢 发送评论</button>
             </div>
             <div id="commentListContainer" class="comment-list"></div>
@@ -560,95 +441,398 @@
         <div class="contact-card">
             <p>✉️ 对于音乐、游戏或篮球，都欢迎交流 ——</p>
             <a href="mailto:shengdatasheng@gmail.com" class="email-link">📧 shengdatasheng@gmail.com</a>
-            <div style="margin-top: 1rem; display: flex; justify-content: center; gap: 1rem;">
+            <div style="margin-top: 1rem; display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
                 <span>🎮 Steam: ShengThunder</span>
                 <span>🎵 网易云/Spotify: DATA_SHENG</span>
                 <span>🐦 X: @OKC_Sheng</span>
             </div>
         </div>
     </section>
-    <footer>🖥️ Sheng的个人数字花园 · 音乐 × 篮球 × 独立游戏 | 保持热爱，保持创作。</footer>
+    <footer>🖥️ Sheng的数字花园 · 音乐 × 交互艺术 × 篮球 | 节奏光域·感官新体验</footer>
 </div>
 
 <script>
-    // ======================= 形状捕手游戏 =======================
-    (function(){
-        const container = document.getElementById('shapeCatcherRoot');
-        if(!container) return;
-        const gameHTML = `
-            <div style="width:100%; max-width:900px; margin:0 auto;">
-                <div class="custom-game-stats">
-                    <div>⭐ 得分 <span id="inlineScoreVal">0</span></div>
-                    <div>🏆 最高 <span id="inlineBestVal">0</span></div>
-                    <div>⏱️ 剩余 <span id="inlineTimerVal">10.0</span>s</div>
-                </div>
-                <canvas id="shapeCanvas" width="900" height="550" style="width:100%; height:auto; background:#fef9e8; border-radius:28px; cursor:pointer; box-shadow:0 8px 20px black;"></canvas>
-                <div style="display:flex; justify-content:center; gap:16px; margin-top:12px;">
-                    <button id="inlineResetBtn" style="background:#fc6e4c; border:none; padding:6px 20px; border-radius:40px; font-weight:bold; color:white;">🔄 重新开局</button>
-                    <button id="inlineNewBtn" style="background:#f7b731; border:none; padding:6px 20px; border-radius:40px; font-weight:bold;">✨ 新的一局</button>
-                </div>
-                <div id="inlineMsg" style="text-align:center; margin-top:8px; font-size:0.8rem; color:#ffdd99;">✨ 疯狂点击彩色形状！每个+10分 ✨</div>
-            </div>
-        `;
-        container.innerHTML = gameHTML;
-        const canvas = document.getElementById('shapeCanvas');
+    // ----------------------------- 全新音乐节奏游戏 -----------------------------
+    (function() {
+        const canvas = document.getElementById('rhythmCanvas');
         const ctx = canvas.getContext('2d');
-        const scoreSpan = document.getElementById('inlineScoreVal');
-        const bestSpan = document.getElementById('inlineBestVal');
-        const timerSpan = document.getElementById('inlineTimerVal');
-        const resetBtn = document.getElementById('inlineResetBtn');
-        const newBtn = document.getElementById('inlineNewBtn');
-        const msgDiv = document.getElementById('inlineMsg');
-        let width = 900, height = 550;
-        canvas.width = width; canvas.height = height;
-        let score = 0, bestScore = 0, timeLeft = 10.0, gameActive = true;
-        let shapes = [], particles = [];
-        let lastFrameTime = 0, lastSpawnTime = 0;
-        let baseSpawnInterval = 800;
-        function getCurrentSpawnInterval() { let interval = baseSpawnInterval - Math.floor(score / 15) * 20; return interval < 280 ? 280 : interval; }
-        function randomRange(min,max){ return min+Math.random()*(max-min); }
-        function randomVibrantColor(){ return `hsl(${Math.random()*360}, ${70+Math.random()*25}%, ${65+Math.random()*20}%)`; }
-        const shapeTypes = ['circle','rect','triangle','diamond','star'];
-        function pointInTriangle(px,py,a,b,c){ const sign=(p1,p2,p3)=> (p1.x-p3.x)*(p2.y-p3.y)-(p2.x-p3.x)*(p1.y-p3.y); let d1=sign({x:px,y:py},a,b), d2=sign({x:px,y:py},b,c), d3=sign({x:px,y:py},c,a); let hasNeg=(d1<0)||(d2<0)||(d3<0), hasPos=(d1>0)||(d2>0)||(d3>0); return !(hasNeg&&hasPos); }
-        function pointInQuad(px,py,a,b,c,d){ return pointInTriangle(px,py,a,b,c)||pointInTriangle(px,py,a,c,d); }
-        function pointInStar(px,py,cx,cy,R){ let outerR=R, innerR=R*0.45, points=[]; for(let i=0;i<10;i++){ let angle=(i*36-90)*Math.PI/180, r=(i%2===0)?outerR:innerR; points.push({x:cx+r*Math.cos(angle),y:cy+r*Math.sin(angle)}); } let inside=false; for(let i=0,j=points.length-1;i<points.length;j=i++){ let xi=points[i].x,yi=points[i].y,xj=points[j].x,yj=points[j].y; let intersect=((yi>py)!=(yj>py))&&(px<(xj-xi)*(py-yi)/(yj-yi)+xi); if(intersect) inside=!inside; } return inside; }
-        class MovingShape{ constructor(x,y,vx,vy,size,color,type,rotSpeed){ this.x=x; this.y=y; this.vx=vx; this.vy=vy; this.size=size; this.color=color; this.type=type; this.rotation=0; this.rotSpeed=rotSpeed; this.pulseScale=1; this.pulseTimer=0; }
-            update(delta){ if(!gameActive) return; this.x+=this.vx*delta; this.y+=this.vy*delta; if(this.x-this.size<0){ this.x=this.size; this.vx=-this.vx; } if(this.x+this.size>width){ this.x=width-this.size; this.vx=-this.vx; } if(this.y-this.size<0){ this.y=this.size; this.vy=-this.vy; } if(this.y+this.size>height){ this.y=height-this.size; this.vy=-this.vy; } this.rotation+=this.rotSpeed*delta; if(this.pulseTimer>0){ this.pulseTimer-=delta; if(this.pulseTimer<=0) this.pulseScale=1; else this.pulseScale=1+Math.sin(this.pulseTimer*20)*0.12; } else this.pulseScale=1; }
-            containsPoint(px,py){ let half=this.size; if(px<this.x-half||px>this.x+half||py<this.y-half||py>this.y+half) return false; switch(this.type){ case 'circle': let dx=px-this.x, dy=py-this.y; return (dx*dx+dy*dy)<=this.size*this.size; case 'rect': return (Math.abs(px-this.x)<=this.size && Math.abs(py-this.y)<=this.size); case 'triangle': let p1={x:this.x,y:this.y-this.size*0.85},p2={x:this.x-this.size*0.85,y:this.y+this.size*0.5},p3={x:this.x+this.size*0.85,y:this.y+this.size*0.5}; return pointInTriangle(px,py,p1,p2,p3); case 'diamond': let a={x:this.x,y:this.y-this.size},b={x:this.x+this.size,y:this.y},c={x:this.x,y:this.y+this.size},d={x:this.x-this.size,y:this.y}; return pointInQuad(px,py,a,b,c,d); case 'star': return pointInStar(px,py,this.x,this.y,this.size); default: return false; } }
-            draw(ctx){ ctx.save(); ctx.translate(this.x,this.y); ctx.rotate(this.rotation); ctx.scale(this.pulseScale,this.pulseScale); ctx.fillStyle=this.color; ctx.shadowBlur=6; ctx.beginPath(); switch(this.type){ case 'circle': ctx.arc(0,0,this.size,0,Math.PI*2); break; case 'rect': ctx.fillRect(-this.size,-this.size,this.size*2,this.size*2); break; case 'triangle': ctx.moveTo(0,-this.size*0.9); ctx.lineTo(-this.size*0.85,this.size*0.6); ctx.lineTo(this.size*0.85,this.size*0.6); break; case 'diamond': ctx.moveTo(0,-this.size); ctx.lineTo(this.size,0); ctx.lineTo(0,this.size); ctx.lineTo(-this.size,0); break; case 'star': let rot=Math.PI/2*3,step=Math.PI/5; ctx.beginPath(); for(let i=0;i<5;i++){ let x1=Math.cos(rot)*this.size*0.8, y1=Math.sin(rot)*this.size*0.8; ctx.lineTo(x1,y1); rot+=step; let x2=Math.cos(rot)*this.size*0.4, y2=Math.sin(rot)*this.size*0.4; ctx.lineTo(x2,y2); rot+=step; } ctx.closePath(); break; } ctx.fill(); ctx.strokeStyle="#fff9cf"; ctx.lineWidth=1.5; ctx.stroke(); ctx.restore(); }
+        const scoreSpan = document.getElementById('rhythmScore');
+        const bestSpan = document.getElementById('rhythmBest');
+        
+        // 尺寸适配
+        let width = 1000, height = 500;
+        canvas.width = width;
+        canvas.height = height;
+        
+        // 游戏核心状态
+        let gameActive = true;      // 是否运行（暂停逻辑基于此）
+        let paused = false;         // 显式暂停
+        let score = 0;
+        let bestScore = localStorage.getItem('rhythmBestScore') ? parseInt(localStorage.getItem('rhythmBestScore')) : 0;
+        let lives = 5;              // 生命值，错过音符损失生命
+        let combo = 0;
+        let animationId = null;
+        
+        // 音符池
+        let notes = [];
+        let lastTimestamp = 0;
+        let lastSpawn = 0;
+        let baseSpawnInterval = 1000; // 毫秒
+        let frequencyMod = 1.0;
+        
+        // 炫光粒子池
+        let particles = [];
+        
+        // 辅助辅助函数
+        function updateUI() {
+            scoreSpan.innerText = score;
+            bestSpan.innerText = bestScore;
         }
-        function addParticles(x,y,color){ for(let i=0;i<10;i++) particles.push({x:x,y:y,vx:(Math.random()-0.5)*200,vy:(Math.random()-0.5)*200-40,life:0.5,color:color,size:3+Math.random()*5}); }
-        function updateParticles(delta){ for(let i=0;i<particles.length;i++){ let p=particles[i]; p.x+=p.vx*delta; p.y+=p.vy*delta; p.life-=delta; p.vy+=200*delta; if(p.life<=0){ particles.splice(i,1); i--; } } }
-        function drawParticles(){ for(let p of particles){ ctx.globalAlpha=p.life; ctx.fillStyle=p.color; ctx.beginPath(); ctx.arc(p.x,p.y,p.size,0,Math.PI*2); ctx.fill(); } ctx.globalAlpha=1; }
-        function spawnShape(){ if(!gameActive) return; let size=randomRange(22,42), x=randomRange(size,width-size), y=randomRange(size,height-size); let speedBase=120+Math.min(220,Math.floor(score/8)*9); let vx=randomRange(-speedBase,speedBase), vy=randomRange(-speedBase,speedBase); let type=shapeTypes[Math.floor(Math.random()*shapeTypes.length)]; shapes.push(new MovingShape(x,y,vx,vy,size,randomVibrantColor(),type,randomRange(-3,3))); }
-        function updateUI(){ scoreSpan.innerText=score; if(score>bestScore){ bestScore=score; localStorage.setItem('shapeCatcherBestSite',bestScore); bestSpan.innerText=bestScore; document.getElementById('staticHighScoreDisplay').innerText=bestScore; } timerSpan.innerText=timeLeft.toFixed(1); }
-        function loadBest(){ let saved=localStorage.getItem('shapeCatcherBestSite'); bestScore=saved?parseInt(saved):0; bestSpan.innerText=bestScore; document.getElementById('staticHighScoreDisplay').innerText=bestScore; }
-        function endGame(){ if(!gameActive) return; gameActive=false; msgDiv.innerHTML="⏰ 时间到！点击「新的一局」继续挑战！"; }
-        function resetGame(){ gameActive=true; score=0; timeLeft=10.0; shapes=[]; particles=[]; updateUI(); for(let i=0;i<4;i++) spawnShape(); lastSpawnTime=performance.now()/1000; msgDiv.innerHTML="⚡ 新对局！点击形状，越多越快！⚡"; }
-        function handleCanvasClick(e){ if(!gameActive) return; let rect=canvas.getBoundingClientRect(); let scaleX=canvas.width/rect.width, scaleY=canvas.height/rect.height; let clientX=e.touches?e.touches[0].clientX:e.clientX, clientY=e.touches?e.touches[0].clientY:e.clientY; let canvasX=(clientX-rect.left)*scaleX, canvasY=(clientY-rect.top)*scaleY; for(let i=shapes.length-1;i>=0;i--){ let s=shapes[i]; if(s.containsPoint(canvasX,canvasY)){ score+=10; updateUI(); addParticles(s.x,s.y,s.color); shapes.splice(i,1); spawnShape(); msgDiv.innerHTML="🎯 +10 !"; setTimeout(()=>{ if(gameActive) msgDiv.innerHTML="⚡ 继续点击！"; },300); break; } } }
-        canvas.addEventListener('click',handleCanvasClick); canvas.addEventListener('touchstart',(e)=>{ e.preventDefault(); handleCanvasClick(e); });
-        resetBtn.onclick=()=>{ resetGame(); loadBest(); };
-        newBtn.onclick=()=>{ resetGame(); loadBest(); };
-        let lastTime=0, animId;
-        function gameLoop(now){ let delta=Math.min(0.033,(now-lastTime)/1000); if(delta>0){ lastTime=now; if(gameActive){ timeLeft-=delta; if(timeLeft<=0){ timeLeft=0; updateUI(); endGame(); } else updateUI(); let nowSec=now/1000; if(!lastSpawnTime) lastSpawnTime=nowSec; if(nowSec-lastSpawnTime>=getCurrentSpawnInterval()/1000){ spawnShape(); lastSpawnTime=nowSec; if(score>70&&Math.random()<0.3) spawnShape(); } shapes.forEach(s=>s.update(delta)); } updateParticles(delta); ctx.clearRect(0,0,width,height); ctx.fillStyle="#fef0cf"; ctx.fillRect(0,0,width,height); for(let i=0;i<width+height;i+=40){ ctx.beginPath(); ctx.strokeStyle="#ffdb9f"; ctx.moveTo(i,0); ctx.lineTo(0,i); ctx.stroke(); } shapes.forEach(s=>s.draw(ctx)); drawParticles(); if(!gameActive){ ctx.font="bold 40px system-ui"; ctx.fillStyle="#a1220c"; ctx.fillText("GAME OVER", width/2-120, height/2); } } animId=requestAnimationFrame(gameLoop); }
-        loadBest(); resetGame(); lastTime=performance.now(); animId=requestAnimationFrame(gameLoop);
+        
+        function saveBest() {
+            if(score > bestScore) {
+                bestScore = score;
+                localStorage.setItem('rhythmBestScore', bestScore);
+                bestSpan.innerText = bestScore;
+            }
+        }
+        
+        // 生成一个音符 (圆形律动体)
+        function spawnNote(nowMs) {
+            if(!gameActive || paused) return;
+            // 动态难度：得分越高出现越快 间隔从1000ms 降至最低360ms
+            let dynamicInterval = Math.max(360, baseSpawnInterval - Math.floor(score / 25) * 18);
+            if(nowMs - lastSpawn < dynamicInterval) return;
+            lastSpawn = nowMs;
+            
+            const radius = 28 + Math.random() * 12;
+            // X范围避免边缘拥挤
+            const x = 60 + Math.random() * (width - 120);
+            const y = 60 + Math.random() * (height - 120);
+            // 脉动速度 / 生长节奏 (从0膨胀到最大半径的周期)
+            const lifeDuration = 800; // 毫秒 存在并生长，玩家需要在生命末期前击中
+            const startTime = nowMs;
+            const endTime = startTime + lifeDuration;
+            // 颜色采用明亮光谱
+            const hue = (Math.random() * 360);
+            const color = `hsl(${hue}, 80%, 65%)`;
+            // 额外的辉光标记
+            notes.push({
+                id: Math.random(),
+                x, y,
+                maxRadius: radius,
+                startTime,
+                endTime,
+                color,
+                hit: false,
+                perfectHit: false,
+                hue: hue
+            });
+        }
+        
+        // 检查点击命中
+        function handleHit(clientX, clientY) {
+            if(!gameActive || paused) return false;
+            const rect = canvas.getBoundingClientRect();
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
+            let canvasX = (clientX - rect.left) * scaleX;
+            let canvasY = (clientY - rect.top) * scaleY;
+            canvasX = Math.min(width, Math.max(0, canvasX));
+            canvasY = Math.min(height, Math.max(0, canvasY));
+            
+            let hitIdx = -1;
+            let minDistance = 9999;
+            // 根据当前半径判断：取当前音符的瞬时半径（线性插值）
+            const now = performance.now();
+            for(let i=0; i<notes.length; i++) {
+                const n = notes[i];
+                if(n.hit) continue;
+                let t = (now - n.startTime) / (n.endTime - n.startTime);
+                t = Math.min(1, Math.max(0, t));
+                let currentRadius = n.maxRadius * t;  // 膨胀中
+                if(currentRadius < 4) currentRadius = n.maxRadius * 0.2;
+                const dx = canvasX - n.x, dy = canvasY - n.y;
+                const dist = Math.hypot(dx, dy);
+                if(dist <= currentRadius + 8) {
+                    if(dist < minDistance) {
+                        minDistance = dist;
+                        hitIdx = i;
+                    }
+                }
+            }
+            if(hitIdx !== -1) {
+                const note = notes[hitIdx];
+                if(note.hit) return false;
+                const nowPerf = performance.now();
+                let progress = (nowPerf - note.startTime) / (note.endTime - note.startTime);
+                let isPerfect = (progress >= 0.45 && progress <= 0.85);
+                let addScore = isPerfect ? 10 : 5;
+                score += addScore;
+                combo += 1;
+                if(addScore === 10) {
+                    createBurstEffect(note.x, note.y, note.color, true);
+                } else {
+                    createBurstEffect(note.x, note.y, '#ffaa66', false);
+                }
+                note.hit = true;
+                updateUI();
+                saveBest();
+                // 完美增加一点点生命？不，生命只由失误扣，但不额外回血，更硬核
+                // 震动反馈
+                if(navigator.vibrate) navigator.vibrate(50);
+                return true;
+            }
+            return false;
+        }
+        
+        // 生成击中粒子
+        function createBurstEffect(x, y, baseColor, perfect) {
+            let count = perfect ? 18 : 10;
+            for(let i=0;i<count;i++) {
+                let angle = Math.random() * Math.PI * 2;
+                let speed = 80 + Math.random() * 150;
+                let vx = Math.cos(angle) * speed;
+                let vy = Math.sin(angle) * speed;
+                particles.push({
+                    x: x, y: y, vx: vx, vy: vy,
+                    life: 0.5,
+                    size: 3 + Math.random() * 5,
+                    color: perfect ? `hsl(${Math.random()*60 + 40}, 85%, 65%)` : baseColor
+                });
+            }
+        }
+        
+        // 更新未击中的音符（错过扣除生命）
+        function updateMissedNotes(now) {
+            for(let i=0;i<notes.length;i++) {
+                const n = notes[i];
+                if(n.hit) continue;
+                if(now >= n.endTime) {
+                    // 错过
+                    n.hit = true;  // 标记移除
+                    if(gameActive && !paused) {
+                        lives -= 1;
+                        combo = 0;
+                        createBurstEffect(n.x, n.y, '#ff5555', false);
+                        if(lives <= 0) {
+                            gameActive = false;
+                            paused = false;
+                        }
+                    }
+                }
+            }
+            // 移除失效note
+            notes = notes.filter(n => !n.hit);
+        }
+        
+        // 粒子更新
+        function updateParticles(deltaSec) {
+            for(let i=0;i<particles.length;i++) {
+                let p = particles[i];
+                p.x += p.vx * deltaSec;
+                p.y += p.vy * deltaSec;
+                p.life -= deltaSec;
+                p.vy += 180 * deltaSec;
+                if(p.life <= 0) {
+                    particles.splice(i,1);
+                    i--;
+                }
+            }
+        }
+        
+        // 动态背景音乐生成器（Web Audio简单合成律动氛围）
+        let audioCtx = null;
+        let gainNode = null;
+        let isAudioInit = false;
+        let oscillator1, oscillator2;
+        let audioInterval;
+        function initAudio() {
+            if(audioCtx) return;
+            try {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                gainNode = audioCtx.createGain();
+                gainNode.gain.value = 0.18;
+                gainNode.connect(audioCtx.destination);
+                // 简单模拟一个低调而电子感的背景pad (不产生突兀旋律,只是氛围)
+                function playAmbient() {
+                    if(!audioCtx || !gameActive || paused) return;
+                    const now = audioCtx.currentTime;
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.type = 'sine';
+                    const baseFreq = 65.4 + (Math.sin(Date.now() * 0.001) * 3);
+                    osc.frequency.value = baseFreq;
+                    gain.gain.value = 0.08;
+                    osc.connect(gain);
+                    gain.connect(gainNode);
+                    osc.start();
+                    gain.gain.exponentialRampToValueAtTime(0.0001, now + 2.2);
+                    osc.stop(now + 2.2);
+                }
+                if(audioInterval) clearInterval(audioInterval);
+                audioInterval = setInterval(() => { if(gameActive && !paused && audioCtx && audioCtx.state === 'running') playAmbient(); }, 2100);
+                audioCtx.resume();
+                isAudioInit = true;
+            } catch(e) { console.log("audio context not supported"); }
+        }
+        
+        // 渲染绘图（视觉脉冲 + 律动线）
+        function draw(nowMs) {
+            if(!ctx) return;
+            ctx.clearRect(0, 0, width, height);
+            // 绘制动态网格视觉效果 (音乐频谱假想线)
+            const gridCount = 20;
+            for(let i=0;i<gridCount;i++) {
+                ctx.beginPath();
+                const alpha = 0.08 + Math.sin(nowMs * 0.003 + i) * 0.04;
+                ctx.strokeStyle = `rgba(100, 180, 255, ${alpha})`;
+                ctx.lineWidth = 1;
+                ctx.moveTo(i * 50, 0);
+                ctx.lineTo(width, i * 30);
+                ctx.stroke();
+                ctx.moveTo(0, i * 30);
+                ctx.lineTo(width - i * 40, height);
+                ctx.stroke();
+            }
+            // 绘制所有音符
+            for(let n of notes) {
+                let t = (nowMs - n.startTime) / (n.endTime - n.startTime);
+                t = Math.min(1, Math.max(0, t));
+                let currRad = n.maxRadius * t;
+                if(currRad < 3) currRad = 5;
+                const glowIntensity = 0.5 + Math.sin(nowMs * 0.012) * 0.3;
+                ctx.shadowBlur = 14;
+                ctx.shadowColor = `hsl(${n.hue}, 80%, 65%)`;
+                ctx.beginPath();
+                ctx.arc(n.x, n.y, currRad, 0, Math.PI*2);
+                ctx.fillStyle = n.color;
+                ctx.fill();
+                ctx.shadowBlur = 6;
+                ctx.beginPath();
+                ctx.arc(n.x, n.y, currRad * 0.65, 0, Math.PI*2);
+                ctx.fillStyle = `rgba(255, 240, 180, 0.9)`;
+                ctx.fill();
+                // 内圈闪烁
+                ctx.beginPath();
+                ctx.arc(n.x, n.y, currRad * 0.3, 0, Math.PI*2);
+                ctx.fillStyle = `rgba(255, 215, 100, 0.8)`;
+                ctx.fill();
+                ctx.shadowBlur = 0;
+            }
+            // 粒子绘制
+            for(let p of particles) {
+                ctx.globalAlpha = p.life;
+                ctx.fillStyle = p.color;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI*2);
+                ctx.fill();
+            }
+            ctx.globalAlpha = 1;
+            // 生命与combo显示
+            ctx.font = "bold 20px 'Courier New'";
+            ctx.fillStyle = "#ffe5b4";
+            ctx.shadowBlur = 0;
+            ctx.fillText(`❤️ ${lives}`, 20, 48);
+            if(combo > 2) {
+                ctx.font = "bold 18px monospace";
+                ctx.fillStyle = "#ffcc66";
+                ctx.fillText(`⚡ ${combo} combo`, 120, 48);
+            }
+            if(!gameActive && !paused) {
+                ctx.font = "800 36px system-ui";
+                ctx.fillStyle = "#f97316";
+                ctx.shadowBlur = 4;
+                ctx.fillText("GAME OVER · 重开乐章", width/2-180, height/2);
+            } else if(paused && gameActive) {
+                ctx.font = "bold 32px system-ui";
+                ctx.fillStyle = "#88aaff";
+                ctx.fillText("⏸ 暂停", width/2-70, height/2);
+            }
+        }
+        
+        let lastFrame = 0;
+        function gameLoop(now) {
+            if(!gameActive && paused === false) {
+                draw(now);
+                animationId = requestAnimationFrame(gameLoop);
+                return;
+            }
+            if(paused) {
+                draw(now);
+                animationId = requestAnimationFrame(gameLoop);
+                return;
+            }
+            if(!gameActive && lives<=0) {
+                draw(now);
+                animationId = requestAnimationFrame(gameLoop);
+                return;
+            }
+            const delta = Math.min(0.033, (now - lastFrame) / 1000);
+            lastFrame = now;
+            // 生成音符
+            spawnNote(now);
+            updateMissedNotes(now);
+            updateParticles(delta);
+            // 边缘重置生命为0时失活
+            if(lives <= 0) {
+                gameActive = false;
+                lives = 0;
+            }
+            draw(now);
+            animationId = requestAnimationFrame(gameLoop);
+        }
+        
+        // 事件绑定点击/触摸
+        function attachEvents() {
+            canvas.addEventListener('click', (e) => {
+                e.preventDefault();
+                handleHit(e.clientX, e.clientY);
+            });
+            canvas.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                const touch = e.touches[0];
+                if(touch) handleHit(touch.clientX, touch.clientY);
+            });
+        }
+        
+        function restartGame() {
+            gameActive = true;
+            paused = false;
+            score = 0;
+            lives = 5;
+            combo = 0;
+            notes = [];
+            particles = [];
+            lastSpawn = performance.now();
+            updateUI();
+            saveBest();
+            if(audioCtx && audioCtx.state !== 'running') {
+                audioCtx.resume();
+            }
+        }
+        
+        function togglePause() {
+            if(!gameActive) return;
+            paused = !paused;
+            if(!paused && audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+        }
+        
+        document.getElementById('restartGameBtn').addEventListener('click', () => { restartGame(); });
+        document.getElementById('pauseGameBtn').addEventListener('click', () => { togglePause(); });
+        
+        // 初次载入
+        restartGame();
+        attachEvents();
+        initAudio();
+        lastFrame = performance.now();
+        animationId = requestAnimationFrame(gameLoop);
+        updateUI();
+        // 用户手势激活audio
+        canvas.addEventListener('click', () => { if(audioCtx && audioCtx.state === 'suspended') audioCtx.resume(); }, { once: false });
     })();
-
-    // 折叠博客功能
-    window.toggleBlog = function(headerElem) {
-        const blogPost = headerElem.closest('.blog-post');
-        const content = blogPost.querySelector('.blog-content');
-        const icon = headerElem.querySelector('.toggle-icon');
-        if(content.classList.contains('show')) {
-            content.classList.remove('show');
-            icon.innerHTML = '▶';
-        } else {
-            content.classList.add('show');
-            icon.innerHTML = '▼';
-        }
-    };
-
-    // 评论区 localStorage
+    
+    // ------------------- 评论区保留原有功能（精简无博客，仅保留评论）-----------------
     (function(){
         const STORAGE_KEY = "thunder_blog_comments_v2";
         const commentContainer = document.getElementById('commentListContainer');
